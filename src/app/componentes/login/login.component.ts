@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { JugadorService } from './../../servicios/jugador.service';
 import { User } from './../../clases/user';
 import { Component, OnInit } from '@angular/core';
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private auth:AuthService, 
     private route:Router, 
     private fb: FormBuilder,
-    private jugadorSrv: JugadorService) {
+    private jugadorSrv: JugadorService,
+    private toastr: ToastrService) {
 
     this.loginForm = this.fb.group({
       email : new FormControl('', [Validators.required, Validators.email]), 
@@ -51,7 +53,7 @@ export class LoginComponent implements OnInit {
 
             //Log de ingreso a la plataforma
             this.jugador = this.logIngreso(this.user.iduser);
-            console.log('Log de jugador: ',this.jugador);
+            
             this.jugadorSrv.agregarLogJugador(this.jugador);
             this.jugador = ''; 
 

@@ -7311,6 +7311,10 @@ textarea.form-control-lg {
   margin-top: 3rem !important;
 }
 
+.mt-6 {
+  margin-top: 8rem !important;
+}
+
 .mt-auto {
   margin-top: auto !important;
 }
@@ -11423,7 +11427,7 @@ html {
 }
 .masthead .masthead-heading {
   font-size: 2.75rem;
-  line-height: 2.75rem;
+  line-height: 24.5rem;
 }
 .masthead .masthead-subheading {
   font-size: 1.25rem;
@@ -11432,14 +11436,14 @@ html {
   width: 15rem;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 740px) {
   .masthead {
     padding-top: calc(6rem + 104px);
     padding-bottom: 6rem;
   }
   .masthead .masthead-heading {
     font-size: 4rem;
-    line-height: 3.5rem;
+    line-height: 27.5rem;
   }
   .masthead .masthead-subheading {
     font-size: 1.5rem;

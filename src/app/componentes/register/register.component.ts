@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/clases/user';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { JugadorService } from 'src/app/servicios/jugador.service';
 
@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
     try {
       if(this.user.password === this.user.cpassword){
         await this.authService.register(this.user).then(()=>{
-          // this.jugadorSrv.agregarLogJugador()
+          
           this.toastr.success('El usuario se creo con éxito', 'Nuevo usuario',{
             timeOut:3000,
             positionClass:'toast-bottom-right'
