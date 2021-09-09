@@ -1,0 +1,31 @@
+
+
+<div class="row">
+    <div class="col-md-6 mx-auto mt-6">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+                   
+                    <div class="form-group">
+                        <label for="InputEmail">Email</label>
+                        <input type="email" class="form-control" formControlName="email" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                        <!-- <small class="invalid" *ngIf="loginForm.get('email').errors?.required" >El email es requerido</small> -->
+                    </div>
+                    <div class="form-group">
+                        <label for="InputPassword">Password</label>
+                        <input type="password" class="form-control" formControlName="password" id="InputPassword" placeholder="Password">
+                    </div>
+                    
+                    <div class="row">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-5 mx-auto">Login</button>
+                        <button class="btn btn-primary btn-lg btn-block col-md-5 mx-auto" (click)="rellenarForm()" >Test</button>
+                    </div>
+                
+                    <div class="form-group mt-3">
+                        <p class="text-center">&iquest;A&uacute;n no est&aacute;s <span><a [routerLink]="['/register']">registrado</a></span>?</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

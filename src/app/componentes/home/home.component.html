@@ -1,0 +1,237 @@
+ <!-- Masthead-->
+ <header class="masthead bg-primary text-white text-center">
+    <!-- This div is  intentionally blank. It creates the transparent black overlay over the video which you can modify in the CSS -->
+    <div class="overlay"></div>
+  
+    <!-- The HTML5 video element that will create the background video on the header -->
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+      <source src="../../../assets/video/Casino.mp4" type="video/mp4">
+    </video>
+  
+    <!-- The header content -->
+    <div class="container d-flex align-items-center flex-column">
+      <div class="d-flex h-100 text-center align-items-center">
+        <div class="w-100 text-white">
+          <h1 class="masthead-heading text-uppercase mb-0">Sala de Juegos</h1>
+          <!-- <p class="lead mb-0">Using HTML5 Video and Bootstrap</p> -->
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <section class="page-section portfolio" id="juegos">
+    <div class="container">
+        <!-- juegos Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Juegos</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fa fa-gamepad fa-lg"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- Juegos Grid Items-->
+        <div class="row justify-content-center">
+            <!-- Juegos Item 1-->
+            <div class="col-md-6 col-lg-6 mb-5">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-toggle="#portfolioModal1">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fa fa-plus fa-3x"></i></div>
+                    </div>
+                    <img class="img-fluid" src="../../../assets/imagenes/juego-ahorcado-portada.jpg" alt="..." />
+                </div>
+            </div>
+            <!-- Juegos Item 2-->
+            <div class="col-md-6 col-lg-6 mb-5">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-toggle="#portfolioModal2">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fa fa-plus fa-3x"></i></div>
+                    </div>
+                    <img class="img-fluid" src="../../../assets/imagenes/may-o-menor-front.jpg" alt="..." />
+                </div>
+            </div>
+            <!-- Juegos Item 3-->
+            <div class="col-md-6 col-lg-6 mb-5">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fa fa-plus fa-3x"></i></div>
+                    </div>
+                    <img class="img-fluid" src="../../../assets/imagenes/preguntados-portada.jpg" alt="..." />
+                </div>
+            </div>
+            <!-- juegos Item 4-->
+            <div class="col-md-6 col-lg-6 mb-5">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal4">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fa fa-plus fa-3x"></i></div>
+                    </div>
+                    <img class="img-fluid" src="../../../assets/imagenes/Memotest_front.png" alt="..." />
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+  <!-- Footer-->
+  <footer class="footer text-center">
+    <div class="container">
+        <div class="row">
+            <!-- Footer Location-->
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <h4 class="text-uppercase mb-4">Ubicación</h4>
+                <p class="lead mb-0">
+                    Buenos Aires
+                    <br />
+                    Argentina, AR
+                </p>
+            </div>
+            <!-- Footer Social Icons-->
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <h4 class="text-uppercase mb-4">Around the Web</h4>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://ar.linkedin.com/in/nicolasmiguenz"><i class="fa fa-linkedin"></i></a>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://github.com/nmiguenz"><i class="fa fa-github"></i></a>
+            </div>
+            <!-- Footer About Text-->
+            <div class="col-lg-4">
+                <h4 class="text-uppercase mb-4">Sobre el desarrollador</h4>
+                <p class="lead mb-0">
+                    Programdor en Soluciones tecnológicas de la infomación y estudiante en la UTN. Podés conocer más de mi en la sección
+                    <a [routerLink]="['/quien-soy']">¿quién soy?</a>
+                </p>
+            </div>
+        </div>
+    </div>
+  </footer>
+  <!-- Copyright Section-->
+  <div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; Sala de juegos - 2021</small></div>
+  </div>
+  
+  <!-- Juegos Modales-->
+          <!-- juego Modal 1-->
+          <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body text-center pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Ahorcado</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fa fa-bullseye"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image-->
+                                    <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/juego-ahorcado-portada.jpg" alt="..." />
+                                    <!-- Portfolio Modal - Text-->
+                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                    <button class="btn btn-primary" href="#!" data-dismiss="modal" *ngIf="isLogged">
+                                        <i class="fa fa-times fa-fw"></i>
+                                        Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  <!-- Portfolio Modal 2-->
+  <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" aria-labelledby="portfolioModal2" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <!-- Portfolio Modal - Title-->
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Mayor o menor</h2>
+                            <!-- Icon Divider-->
+                            <div class="divider-custom">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fa fa-bullseye"></i></div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+                            <!-- Portfolio Modal - Image-->
+                            <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/may-o-menor-front.jpg" alt="..." />
+                            <!-- Portfolio Modal - Text-->
+                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                            <button class="btn btn-primary" href="#!" data-dismiss="modal" *ngIf="isLogged">
+                                <i class="fa fa-times fa-fw"></i>
+                                Close Window
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- Portfolio Modal 3-->
+  <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" aria-labelledby="portfolioModal3" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <!-- Portfolio Modal - Title-->
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Preguntados</h2>
+                            <!-- Icon Divider-->
+                            <div class="divider-custom">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fa fa-bullseye"></i></div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+                            <!-- Portfolio Modal - Image-->
+                            <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/preguntados-portada.jpg" alt="..." />
+                            <!-- Portfolio Modal - Text-->
+                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                            <button class="btn btn-primary" href="#!" data-dismiss="modal" *ngIf="isLogged">
+                                <i class="fa fa-times fa-fw"></i>
+                                Close Window
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- Juego Modal 4-->
+  <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" aria-labelledby="portfolioModal4" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <!-- Portfolio Modal - Title-->
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Controller</h2>
+                            <!-- Icon Divider-->
+                            <div class="divider-custom">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fa fa-bullseye"></i></div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+                            <!-- Portfolio Modal - Image-->
+                            <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/github.png" alt="..." />
+                            <!-- Portfolio Modal - Text-->
+                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                            <button class="btn btn-primary" href="#!" data-dismiss="modal" *ngIf="isLogged">
+                                <i class="fa fa-times fa-fw"></i>
+                                Close Window
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

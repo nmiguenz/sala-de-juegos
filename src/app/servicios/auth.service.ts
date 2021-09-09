@@ -1,0 +1,51 @@
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
+import { User } from '../clases/user';
+import { first } from 'rxjs/operators'; //importa FIRST()
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  
+  codigoError : string = '';
+
+  constructor( 
+    private auth:AngularFireAuth, 
+    private route:Router,
+    public afs: AngularFirestore,   // Inject Firestore service
+    ) { }
+
+  async login(user:User) : Promise<any> {
+    try {
+      return await this.auth.signInWithEmailAndPassword(user.email,user.password);
+    } catch (error) {
+      console.log(error);
+    } 
+  }
+
+  async register(user:User) : Promise<any>{
+    try {
+      return await this.auth.createUserWithEmailAndPassword(user.email, user.password);
+    } catch (error) {
+      console.log('Error al crear User', error);
+    }
+  }
+
+  //Cierra la sesión del usuario
+  logOut() {
+    return this.auth.signOut();
+  }
+
+  //Devuelve un observable con el estado.
+  isLoggedIn() {
+    return this.auth.authState;
+  }
+
+  //Obtengo al usuario logueado!
+  getCurrentUser() : Promise<any>{
+      return this.auth.authState.pipe(first()).toPromise();      
+  }
+}
