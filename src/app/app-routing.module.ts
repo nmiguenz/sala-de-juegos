@@ -1,3 +1,4 @@
+import { ChatComponent } from './componentes/chat/chat.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './componentes/home/home.component';
@@ -9,7 +10,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'quien-soy', component: QuienSoyComponent},
-  { path: 'register', component: RegisterComponent}
+  { path: 'register', component: RegisterComponent},
+  { path: 'chat', component: ChatComponent} //Luego sacarlo
 ];
 
 @NgModule({

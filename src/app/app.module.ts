@@ -10,7 +10,8 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 //Componentes
 import { NavbarComponent } from './componentes/navbar/navbar.component';
@@ -22,6 +23,7 @@ import { QuienSoyComponent } from './componentes/quien-soy/quien-soy.component';
 //Componentes Toastr
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChatComponent } from './componentes/chat/chat.component';
 
 
 
@@ -32,7 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    QuienSoyComponent
+    QuienSoyComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFirestoreModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(), // ToastrModule added,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
 
   ],
   providers: [],

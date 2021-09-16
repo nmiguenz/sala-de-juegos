@@ -64,13 +64,18 @@
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fa fa-plus fa-3x"></i></div>
                     </div>
-                    <img class="img-fluid" src="../../../assets/imagenes/Memotest_front.png" alt="..." />
+                    <img class="img-fluid" src="../../../assets/imagenes/wackamole.jpg" alt="..." />
                 </div>
             </div>
         </div>
     </div>
   </section>
-  
+
+  <!-- Botón chat -->  
+    <a href="#" class="float"  data-bs-toggle="modal" data-bs-target="#chatModal" *ngIf="isLogged">
+    <i class="fa fa-comments fa-lg my-float"></i>
+    </a>
+
   <!-- Footer-->
   <footer class="footer text-center">
     <div class="container">
@@ -213,7 +218,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
                             <!-- Portfolio Modal - Title-->
-                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Propio</h2>
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Whac a mole</h2>
                             <!-- Icon Divider-->
                             <div class="divider-custom">
                                 <div class="divider-custom-line"></div>
@@ -221,7 +226,7 @@
                                 <div class="divider-custom-line"></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/github.png" alt="..." />
+                            <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/wackamole.jpg" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                             <button class="btn btn-primary" href="#!" data-dismiss="modal" *ngIf="isLogged">
@@ -235,3 +240,13 @@
         </div>
     </div>
   </div>
+
+    <!-- Chat modal-->
+          <div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModal" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content-chat modal-chat">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <app-chat></app-chat>
+                </div>
+            </div>
+          </div>
