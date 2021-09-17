@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from '../clases/user';
 import { first } from 'rxjs/operators'; //importa FIRST()
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class AuthService {
 
   async login(user:User) : Promise<any> {
     try {
-      return await this.auth.signInWithEmailAndPassword(user.email,user.password);
+      return await this.auth.signInWithEmailAndPassword(user.email!,user.password);
     } catch (error) {
       console.log(error);
     } 
@@ -28,7 +29,7 @@ export class AuthService {
 
   async register(user:User) : Promise<any>{
     try {
-      return await this.auth.createUserWithEmailAndPassword(user.email, user.password);
+      return await this.auth.createUserWithEmailAndPassword(user.email!, user.password);
     } catch (error) {
       console.log('Error al crear User', error);
     }
@@ -45,7 +46,8 @@ export class AuthService {
   }
 
   //Obtengo al usuario logueado!
-  getCurrentUser() : Promise<any>{
-      return this.auth.authState.pipe(first()).toPromise();      
+  getCurrentUser() : any{
+      return this.auth.authState.pipe(first()).subscribe( user =>{
+      });
   }
 }

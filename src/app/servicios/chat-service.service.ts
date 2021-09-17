@@ -2,7 +2,7 @@ import { Mensaje } from './../clases/mensaje';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
-import { textSpanOverlap } from 'typescript';
+import { User } from '../clases/user';
 
 
 @Injectable({
@@ -16,14 +16,16 @@ export class ChatServiceService {
 
   constructor( private afs: AngularFirestore) { 
     this.itemsCollection = this.afs.collection<Mensaje>('chats');
+    
   }
 
+  //Carga la coleccion de mensajes
   cargarMensaje(){
 
     //Get de la COLLECTION de 'CHATS'
     this.itemsCollection = this.afs.collection<Mensaje>('chats', ref => 
       ref.orderBy('fecha','desc') //Query de ordenamiento
-        .limit(5)
+        .limit(30)
     );
 
     return this.itemsCollection.valueChanges().pipe(map( mensajes =>{
@@ -34,23 +36,20 @@ export class ChatServiceService {
       for(let mensaje of mensajes){
         this.chats.unshift(mensaje) //Inserta el mensaje en la primera posición del array
       }
-
       return this.chats;
-
-    }));
-
+    }));  
   }
 
-  agregarMensaje(msj:string){
+  //Agrega un nuevo mensaje a la colección
+  //No se debe enviar un mensaje vacío
+  agregarMensaje(msj:string, usuarioLogueado:User){
 
     let mensaje : Mensaje = {
-
-      nombre: 'Juan',
+      nombre: usuarioLogueado.email!,
       mensaje: msj,
-      fecha: new Date().getTime()
+      fecha: new Date().getTime(),
+      uid: usuarioLogueado.iduser
     }
-
     return this.itemsCollection.add(mensaje);
-
   }
 }
