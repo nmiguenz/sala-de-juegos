@@ -36,7 +36,6 @@ export class ChatComponent implements OnInit {
       }else{
         this.usuarioLogueado.iduser = user.uid;
         this.usuarioLogueado.email = user.email!;
-        console.log(this.usuarioLogueado);
       }
     })
 

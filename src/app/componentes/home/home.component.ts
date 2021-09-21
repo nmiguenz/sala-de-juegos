@@ -1,8 +1,6 @@
 import { Router } from '@angular/router';
-import { User } from './../../clases/user';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
-
 
 @Component({
   selector: 'app-home',
@@ -12,9 +10,13 @@ import { AuthService } from 'src/app/servicios/auth.service';
 export class HomeComponent implements OnInit {
 
   public isLogged = false;
+  
   public user : any;
 
-  constructor(private authService:AuthService, private route: Router) { }
+  private elemento : any;
+
+  constructor(private authService:AuthService,
+              private route: Router) {}
 
   ngOnInit(): void {
     this.authService.isLoggedIn().subscribe(
@@ -28,14 +30,19 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  // No los
-  onLogout(){
-    this.authService.logOut().then( () => {
-      console.log('Se cerró la sesión.');
-      this.isLogged = false;
-      console.log('Logout HOMe', this.isLogged.valueOf());
-      //this.route.navigate([''])
-    }).catch(() => console.log('Error en el logout.'));
-  };
+  redirigeAlJuego( juego : string){
+
+    console.log(juego)
+
+    //agarro el elemento
+    this.elemento = document.getElementById(juego);
+
+    console.log(this.elemento);
+    //Quito las propiedades modales
+    this.elemento.removeClass('modal');
+
+
+    this.route.navigate([juego]);
+  }
 
 }

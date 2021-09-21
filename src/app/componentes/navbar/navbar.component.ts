@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth.service';
 
@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  @Input() isLogged = false;
+  public isLogged = false;
   public user : any;
   constructor(private authService:AuthService, private route:Router) { }
 
@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
         if(this.user){
           this.isLogged = true;
         }
+        else this.isLogged = false;
       },
       err => console.log(err)
     );

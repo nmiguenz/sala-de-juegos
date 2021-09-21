@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
 import { User } from '../clases/user';
 import { first } from 'rxjs/operators'; //importa FIRST()
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -15,7 +14,6 @@ export class AuthService {
 
   constructor( 
     private auth:AngularFireAuth, 
-    private route:Router,
     public afs: AngularFirestore,   // Inject Firestore service
     ) { }
 
@@ -23,7 +21,7 @@ export class AuthService {
     try {
       return await this.auth.signInWithEmailAndPassword(user.email!,user.password);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     } 
   }
 

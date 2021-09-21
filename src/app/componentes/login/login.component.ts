@@ -14,7 +14,9 @@ import { AuthService } from 'src/app/servicios/auth.service';
 export class LoginComponent implements OnInit {
 
   public loginForm : FormGroup;
+
   user : User = new User();
+  
   jugador : any;
 
   constructor(
@@ -23,19 +25,21 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private jugadorSrv: JugadorService,
     private toastr: ToastrService) {
-
-    this.loginForm = this.fb.group({
-      email : new FormControl('', [Validators.required, Validators.email]), 
-      password : new FormControl('',[Validators.required, Validators.minLength(8)])
-    })
-
+      
+      this.loginForm = this.fb.group({
+        email :  new FormControl('', [Validators.required, Validators.email]),
+        password : new FormControl('',[Validators.required, Validators.minLength(8)])
+      })
   }
 
   ngOnInit(): void {
-    this.loginForm.reset({
-      email : '',
-      password : ''
-    })
+
+    //Limpio los campos del form
+    // this.loginForm.reset({
+    //   email : '',
+    //   password : ''
+    // });
+    
   }
   
   //Pasos después de que el servicio devuelve el estado del login
@@ -72,13 +76,12 @@ export class LoginComponent implements OnInit {
   }
 
   logIngreso(id:string){
+
     return this.jugador = {
       iduser: id,
       email : this.loginForm.value.email,
       fechaIngreso: new Date()
     }
-
-    console.log(this.jugador);
 
     // this.jugadorSrv.agregarLogJugador(this.jugador).then(()=>{
     // }).catch(error =>{

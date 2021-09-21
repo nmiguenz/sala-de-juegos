@@ -34,7 +34,7 @@
         <div class="row justify-content-center">
             <!-- Juegos Item 1-->
             <div class="col-md-6 col-lg-6 mb-5">
-                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#ahorcado">
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fa fa-plus fa-3x"></i></div>
                     </div>
@@ -114,7 +114,7 @@
   
   <!-- Juegos Modales-->
           <!-- juego Modal 1-->
-          <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+          <div class="portfolio-modal modal fade" id="ahorcado" tabindex="-1" aria-labelledby="ahorcado" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
@@ -123,7 +123,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Ahorcado</h2>
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Ahorcado</h2>  
                                     <!-- Icon Divider-->
                                     <div class="divider-custom">
                                         <div class="divider-custom-line"></div>
@@ -134,9 +134,11 @@
                                     <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/juego-ahorcado-portada.jpg" alt="..." />
                                     <!-- Portfolio Modal - Text-->
                                     <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                                    <button class="btn btn-primary" href="#!" data-dismiss="modal" *ngIf="isLogged">
-                                        <i class="fa fa-times fa-fw"></i>
-                                        Close Window
+                                    <button class="btn btn-primary" 
+                                            (click)="redirigeAlJuego('ahorcado')" 
+                                            data-dismiss="modal" *ngIf="isLogged">
+                                        <i class="fa fa-play-circle fa-fw"></i>
+                                        Jugar
                                     </button>
                                 </div>
                             </div>

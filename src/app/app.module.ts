@@ -24,6 +24,7 @@ import { QuienSoyComponent } from './componentes/quien-soy/quien-soy.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './componentes/chat/chat.component';
+import { AhorcadoComponent } from './juegos/ahorcado/ahorcado.component';
 
 
 
@@ -35,7 +36,8 @@ import { ChatComponent } from './componentes/chat/chat.component';
     LoginComponent,
     RegisterComponent,
     QuienSoyComponent,
-    ChatComponent
+    ChatComponent,
+    AhorcadoComponent
   ],
   imports: [
     BrowserModule,
