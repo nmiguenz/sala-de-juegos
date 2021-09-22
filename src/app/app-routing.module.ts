@@ -1,3 +1,4 @@
+import { GolpearCarpinchoComponent } from './juegos/golpear-carpincho/golpear-carpincho.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './componentes/home/home.component';
@@ -11,7 +12,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'quien-soy', component: QuienSoyComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'ahorcado', component: AhorcadoComponent} //Luego sacarlo
+  { path: 'ahorcado', component: AhorcadoComponent}, //Luego sacarlo
+  { path: 'golpear-carpincho', component: GolpearCarpinchoComponent} //Luego sacarlo
 ];
 
 @NgModule({

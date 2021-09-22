@@ -25,6 +25,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { AhorcadoComponent } from './juegos/ahorcado/ahorcado.component';
+import { GolpearCarpinchoComponent } from './juegos/golpear-carpincho/golpear-carpincho.component';
 
 
 
@@ -37,7 +38,8 @@ import { AhorcadoComponent } from './juegos/ahorcado/ahorcado.component';
     RegisterComponent,
     QuienSoyComponent,
     ChatComponent,
-    AhorcadoComponent
+    AhorcadoComponent,
+    GolpearCarpinchoComponent
   ],
   imports: [
     BrowserModule,
