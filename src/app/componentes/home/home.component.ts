@@ -8,23 +8,15 @@ import { AuthService } from 'src/app/servicios/auth.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  public isLogged = false;    
+    
   public user : any;
+  public logueado = this.authService.isLoggedIn();
 
   constructor(private authService:AuthService,
               private route: Router) {}
 
   ngOnInit(): void {
-    this.authService.isLoggedIn().subscribe(
-      data => {
-        this.user = data;
-        if(this.user){
-          this.isLogged = true;
-        }
-      },
-      err => console.log(err)
-    );
+  
   }
 
   // actionButton() {

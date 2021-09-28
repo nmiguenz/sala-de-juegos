@@ -117,7 +117,7 @@ export class GolpearCarpinchoComponent implements OnInit {
   countDown(){
     this.currentTime--;
 
-    if (this.currentTime == -1) {
+    if (this.currentTime == 0) {
       clearInterval(this.countDownTimerId)
       clearInterval(this.timerId)
       alert('GAME OVER! Your final score is ' + this.result)

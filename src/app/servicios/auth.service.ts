@@ -41,10 +41,4 @@ export class AuthService {
   isLoggedIn() {
     return this.auth.authState;
   }
-
-  //Obtengo al usuario logueado!
-  getCurrentUser() : any{
-      return this.auth.authState.pipe(first()).subscribe( user =>{
-      });
-  }
 }

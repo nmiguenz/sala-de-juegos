@@ -1,14 +1,27 @@
-.main-container{
-    margin-top: 40px;
-    margin-bottom: 150px;
-  }
-  
-  .puntero{
+/* Boton de chat */
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:22px;
+}
+
+.puntero{
     cursor: pointer;
   }
   
   
-  .chat-window{
+  /* .chat-window{
     padding: 10px;
     margin-left: 0.4rem;
     width: 98%;
@@ -16,11 +29,30 @@
     overflow: hidden;
     border: 2px solid #1abc9c;
     border-radius: 20px;
+  } */
+
+  .chat-window{
+    position: fixed !important;
+    z-index: 2002 !important;
+    right: 15px !important;
+    bottom: 65px !important;
+    width: 300px;
+    height: 600px;
+    border: 2px solid #1abc9c;
+    border-radius: 20px;
+  }
+
+  .card-header{
+    background-color:#0C9;
+  }
+
+  .card-header > h3{
+    color:#FFF;
   }
   
   .app-mensajes{
-    overflow-y: scroll;
-    height: 78%;
+    overflow-y:scroll;
+    height: 460px;
     padding: 5px;
   }
   

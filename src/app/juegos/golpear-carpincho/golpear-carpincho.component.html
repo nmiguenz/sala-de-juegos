@@ -19,17 +19,9 @@
         <div class="col-8 text-center">
           <div class="grid" #squares>
             <div *ngFor="let cuadrado of cuadrados">
-              <button [ngClass] = "{ 'square' : cuadrado.numero , 'mole': cuadrado.seleccion == true }" id="cuadrado.id"></button>
+              <div class="col-3" [ngClass] = "{'mole': cuadrado.seleccion == true }" id="cuadrado.id" ></div>
             </div>
-            <!-- <div class="square" id="2"></div>
-            <div class="square" id="3"></div>
-            <div class="square" id="4"></div>
-            <div class="square" id="5"></div>
-            <div class="square" id="6"></div>
-            <div class="square" id="7"></div>
-            <div class="square" id="8"></div>
-            <div class="square" id="9"></div> -->
-          </div>
+          </div> 
         </div>
         <div class="col-4 text-left">
           <h2>Puntaje: <span id="score">{{result}}</span></h2>

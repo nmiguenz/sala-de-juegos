@@ -1,7 +1,7 @@
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Mensaje } from './../../clases/mensaje';
 import { ChatServiceService } from './../../servicios/chat-service.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/clases/user';
 
 
@@ -12,8 +12,10 @@ import { User } from 'src/app/clases/user';
 })
 export class ChatComponent implements OnInit {
 
+  public openChat = false;
+  @Input('isLogged') isLogged : any;
+  
   mensaje:string = '';
-
   elemento: any;
 
   usuarioLogueado: User = new User();
@@ -23,14 +25,13 @@ export class ChatComponent implements OnInit {
     this.chatSrv.cargarMensaje()
                 .subscribe(() => {
                    
-                  //Le agrego el TimeOut para que le de tiempo a cargar los mensajes
+                  // Le agrego el TimeOut para que le de tiempo a cargar los mensajes
                   setTimeout(()=>{
                     this.elemento.scrollTop = this.elemento.scrollHeight;
                   },20)
                 });
     
-    auth.isLoggedIn().subscribe(user =>{
-
+    this.auth.isLoggedIn().subscribe(user =>{
       if(!user){
         return
       }else{
@@ -38,8 +39,7 @@ export class ChatComponent implements OnInit {
         this.usuarioLogueado.email = user.email!;
       }
     })
-
-   }
+  }
 
   ngOnInit(): void {
     //agarro el elemento
