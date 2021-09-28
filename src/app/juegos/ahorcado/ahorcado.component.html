@@ -1,15 +1,22 @@
-<app-navbar></app-navbar>
-<main class="container-fluid ahorcado_main">
+
+<main class="container-fluid ahorcado_main mt-6">
     <div class="row" id="app">
         <div class="col-12 text-center ahorcado">
             <h1 class="text-success">Ahorcado</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8 text-center">
+            <img class="imagen-ahorcado" [src]="imagePath()" alt="">
+        </div>
+        <div class="col-4">
             <h3 class="displayed-word">Palabra: <br>{{displayWord()}}</h3>
             <p class="h4 text-danger">Intentos restantes: {{intentosRestantes}}</p>
-            <br>
-            <img class="img-fluid" [src]="imagePath()" alt="">
         </div>
-        <div class="col" *ngFor="let letra of letras">
-            <button class="btn btn-success m-1 btn-lg" [disabled]="letra.disabled" (click)="attemptWithLetter(letra)">{{letra.letra}}</button>
+    </div>
+    <div class="row">
+        <div class="col-sm" *ngFor="let letra of letras">
+            <button class="btn btn-success mt-4 btn-sm" [disabled]="letra.disabled" (click)="attemptWithLetter(letra)">{{letra.letra}}</button>
         </div>
     </div>
 </main>

@@ -9,19 +9,19 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1" *ngIf="!isLogged">
                   <a class="nav-link py-3 px-0 px-lg-3 rounded" 
-                      [routerLink]="['/login']"
+                      [routerLink]="['/ingreso/login']"
                       routerLinkActive="active"
                       >Login</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1" *ngIf="!isLogged">
                   <a class="nav-link py-3 px-0 px-lg-3 rounded" 
-                      [routerLink]="['/register']"
+                      [routerLink]="['/ingreso/registro']"
                       routerLinkActive="active"
                       >Registro</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1"*ngIf="!isLogged">
                   <a class="nav-link py-3 px-0 px-lg-3 rounded" 
-                      [routerLink]="['/quien-soy']"
+                      [routerLink]="['quien-soy']"
                       routerLinkActive="active"
                       >Quién soy?</a>
                 </li>

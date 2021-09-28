@@ -1,4 +1,4 @@
- <app-navbar ></app-navbar>
+
  <!-- Masthead-->
  <header class="masthead bg-primary text-white text-center">
     <!-- This div is  intentionally blank. It creates the transparent black overlay over the video which you can modify in the CSS -->
@@ -134,9 +134,10 @@
                                     <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/juego-ahorcado-portada.jpg" alt="..." />
                                     <!-- Portfolio Modal - Text-->
                                     <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                                    <button class="btn btn-primary" 
-                                            (click)="redirigeAlJuego('ahorcado')" 
-                                            data-dismiss="modal" *ngIf="isLogged">
+                                    <button class="btn btn-primary"
+                                            data-bs-dismiss="modal"
+                                            [routerLink]="['/juegos/ahorcado']" 
+                                            *ngIf="isLogged">
                                         <i class="fa fa-play-circle fa-fw"></i>
                                         Jugar
                                     </button>
@@ -168,9 +169,12 @@
                             <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/may-o-menor-front.jpg" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                            <button class="btn btn-primary" href="#!" data-dismiss="modal" *ngIf="isLogged">
-                                <i class="fa fa-times fa-fw"></i>
-                                Close Window
+                            <button class="btn btn-primary" 
+                                            data-bs-dismiss="modal"
+                                            [routerLink]="['/juegos/mayor-menor']" 
+                                            *ngIf="isLogged">
+                                <i class="fa fa-play-circle fa-fw"></i>
+                                Jugar
                             </button>
                         </div>
                     </div>
@@ -200,9 +204,12 @@
                             <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/preguntados-portada.jpg" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                            <button class="btn btn-primary" href="#!" data-dismiss="modal" *ngIf="isLogged">
-                                <i class="fa fa-times fa-fw"></i>
-                                Close Window
+                            <button class="btn btn-primary"
+                                            data-bs-dismiss="modal"
+                                            [routerLink]="['/juegos/preguntados']" 
+                                            *ngIf="isLogged">
+                                <i class="fa fa-play-circle fa-fw"></i>
+                                Jugar
                             </button>
                         </div>
                     </div>
@@ -232,9 +239,12 @@
                             <img class="img-fluid rounded-circle mb-5 img-desplegable" src="../../../assets/imagenes/wackamole.jpg" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                            <button class="btn btn-primary" href="#!" data-dismiss="modal" *ngIf="isLogged">
-                                <i class="fa fa-times fa-fw"></i>
-                                Close Window
+                            <button class="btn btn-primary" 
+                                            data-bs-dismiss="modal"
+                                            [routerLink]="['/juegos/golpear-carpincho']" 
+                                            *ngIf="isLogged">
+                                <i class="fa fa-play-circle fa-fw"></i>
+                                Jugar
                             </button>
                         </div>
                     </div>

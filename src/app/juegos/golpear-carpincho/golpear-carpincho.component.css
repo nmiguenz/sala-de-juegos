@@ -1,13 +1,26 @@
+.startGame{
+	height: 100vh;
+}
+
+.golpearCarpincho_main{
+	margin-top: 7rem;
+	
+}
+
+.titulo{
+	margin-bottom: 3rem;
+}
+
 .grid {
-	width: 606px;
-	height: 606px;
+	width: 303px;
+	height: 303px;
 	display: flex;
 	flex-wrap: wrap;
 }
 
 .square {
-	height: 200px;
-	width: 200px;
+	height: 100px;
+	width: 100px;
 	border: solid black 1px;
 }
 

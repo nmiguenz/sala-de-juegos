@@ -1,7 +1,7 @@
 .ahorcado_main{
-    margin-top: 8rem;
+    margin-top: 1rem;
 }
 
-.ahorcado{
-    height: 10%;
+img.imagen-ahorcado{
+    height: 50vh; 
 }

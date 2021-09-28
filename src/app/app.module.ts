@@ -12,21 +12,15 @@ import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
 //Componentes
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { HomeComponent } from './componentes/home/home.component';
-import { LoginComponent } from './componentes/login/login.component';
-import { RegisterComponent } from './componentes/register/register.component';
 import { QuienSoyComponent } from './componentes/quien-soy/quien-soy.component';
 
 //Componentes Toastr
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './componentes/chat/chat.component';
-import { AhorcadoComponent } from './juegos/ahorcado/ahorcado.component';
-import { GolpearCarpinchoComponent } from './juegos/golpear-carpincho/golpear-carpincho.component';
-
 
 
 @NgModule({
@@ -34,12 +28,8 @@ import { GolpearCarpinchoComponent } from './juegos/golpear-carpincho/golpear-ca
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    LoginComponent,
-    RegisterComponent,
     QuienSoyComponent,
     ChatComponent,
-    AhorcadoComponent,
-    GolpearCarpinchoComponent
   ],
   imports: [
     BrowserModule,

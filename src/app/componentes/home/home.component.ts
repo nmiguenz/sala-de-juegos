@@ -9,11 +9,8 @@ import { AuthService } from 'src/app/servicios/auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  public isLogged = false;
-  
+  public isLogged = false;    
   public user : any;
-
-  private elemento : any;
 
   constructor(private authService:AuthService,
               private route: Router) {}
@@ -30,19 +27,18 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  // actionButton() {
+  //   this.ahorcado.nativeElement.classList.remove('modal')
+  // }
+
   redirigeAlJuego( juego : string){
 
-    console.log(juego)
+    var url = '/juegos';
 
-    //agarro el elemento
-    this.elemento = document.getElementById(juego);
-
-    console.log(this.elemento);
     //Quito las propiedades modales
-    this.elemento.removeClass('modal');
+    // this.elemento.removeClass('modal');
 
-
-    this.route.navigate([juego]);
+    this.route.navigate([`${url}/${juego}`]);
   }
 
 }

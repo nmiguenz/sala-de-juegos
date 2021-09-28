@@ -1,19 +1,43 @@
-<h1>Golpea al carpincho</h1>
+<div *ngIf="terminado==false;">
+  <div *ngIf="this.empezo==false; else hitCarpincho">
+      <div class="container startGame d-flex justify-content-center align-items-center">
+        
+        <div class="row">
+            <button class="btn btn-secondary btn-block" (click)="startJuego()"> Comenzar Juego</button>
+        </div>
+          
 
-<h2>Your score:</h2>
-  <h2 id="score">0</h2>
-
-  <h2>Time Left:</h2>
-  <h2 id="time-left">60</h2>
-
-  <div class="grid">
-    <div class="square" id="1"></div>
-    <div class="square" id="2"></div>
-    <div class="square" id="3"></div>
-    <div class="square" id="4"></div>
-    <div class="square" id="5"></div>
-    <div class="square" id="6"></div>
-    <div class="square" id="7"></div>
-    <div class="square" id="8"></div>
-    <div class="square" id="9"></div>
+      </div>
   </div>
+
+  <ng-template #hitCarpincho>
+    <main class="container-fluid golpearCarpincho_main">
+      <div class="row text-center titulo">
+        <h1>Golpéa al carpincho</h1>
+      </div>
+      <div class="row container-fluid">
+        <div class="col-8 text-center">
+          <div class="grid" #squares>
+            <div *ngFor="let cuadrado of cuadrados">
+              <button [ngClass] = "{ 'square' : cuadrado.numero , 'mole': cuadrado.seleccion == true }" id="cuadrado.id"></button>
+            </div>
+            <!-- <div class="square" id="2"></div>
+            <div class="square" id="3"></div>
+            <div class="square" id="4"></div>
+            <div class="square" id="5"></div>
+            <div class="square" id="6"></div>
+            <div class="square" id="7"></div>
+            <div class="square" id="8"></div>
+            <div class="square" id="9"></div> -->
+          </div>
+        </div>
+        <div class="col-4 text-left">
+          <h2>Puntaje: <span id="score">{{result}}</span></h2>
+            <h2>Tiempo restante:</h2>
+
+            <h2 id="time-left">{{currentTime}}</h2>
+        </div>
+      </div>
+    </main>
+  </ng-template>
+</div>

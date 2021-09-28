@@ -1,9 +1,9 @@
-import { ToastrService } from 'ngx-toastr';
-import { JugadorService } from './../../servicios/jugador.service';
-import { User } from './../../clases/user';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from './../../clases/user';
+import { ToastrService } from 'ngx-toastr';
+import { JugadorService } from './../../servicios/jugador.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({
@@ -90,7 +90,8 @@ export class LoginComponent implements OnInit {
   }
 
   //Completa el login con un usuario de test
-  rellenarForm(){
+  rellenarForm($event:any){
+    $event.preventDefault();
     this.loginForm.setValue({
       email: 'test@utn.com',
       password : 'test123'

@@ -21,7 +21,6 @@ export class AuthService {
     try {
       return await this.auth.signInWithEmailAndPassword(user.email!,user.password);
     } catch (error) {
-      console.log(error.message);
     } 
   }
 

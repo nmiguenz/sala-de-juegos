@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Cuadrados } from './../../clases/cuadrados';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-golpear-carpincho',
@@ -7,11 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GolpearCarpinchoComponent implements OnInit {
 
+  //Flags
+  empezo:boolean = false;
+  terminado:boolean = false;
+
   //elementos
-  cuadrados:any
-  carpincho:any;
+  cuadrados:Cuadrados[] = [
+    {numero: 1, seleccion : false, id: 1},
+    {numero: 2, seleccion : false, id: 2},
+    {numero: 3, seleccion : false, id: 3},
+    {numero: 4, seleccion : false, id: 4},
+    {numero: 5, seleccion : false, id: 5},
+    {numero: 6, seleccion : false, id: 6},
+    {numero: 7, seleccion : false, id: 7},
+    {numero: 8, seleccion : false, id: 8},
+    {numero: 9, seleccion : false, id: 9}
+  ];
   tiempoRestante:any;
-  puntaje:any;
+  public selector :any; 
 
   //variables
   result:number = 0;
@@ -20,79 +35,102 @@ export class GolpearCarpinchoComponent implements OnInit {
   timerId:any;
   cuadradoAleatorio:any;
   countDownTimerId:any;
+
+  //Observable
+  timer = interval(1000);
   
-  constructor() {}
+  constructor() {
+  }
+
+  // @ViewChildren(Div) squares !: QueryList<Div>; 
   
   ngOnInit(): void {
-    this.cuadrados = document.querySelectorAll('.square');
-    this.carpincho = document.querySelector('.mole');
-    this.tiempoRestante = document.querySelector('#time-left');
-    this.puntaje = document.querySelector('#score');
-    //this.moveMole();
-    console.log(this.cuadrados);
-    console.log(this.carpincho);
-    console.log(this.tiempoRestante);
-    console.log(this.puntaje);
+    this.selector = document.querySelectorAll('square');
+    console.log(this.selector);
 
-    this.randomSquare();
-    this.golpeCarpincho();
-    //this.moveMole();
-    //this.countDown();
+    this.selector.forEach( (element : any, posicion:any) =>
+      element.addEventListener('click', (e : any) => this.golpeCarpincho(e, posicion)));
+    // this.carpincho = document.querySelector('.mole');
+    
   }
 
   randomSquare() {
-  this.cuadrados.forEach((cuadrado:any) => {
-    console.log('random', cuadrado);
-    cuadrado.classList.remove('mole');
-  })
 
-  this.cuadradoAleatorio = this.cuadrados[Math.floor(Math.random() * 9)]
-  this.cuadradoAleatorio.classList.add('mole');
+    for (let cuadrado of this.cuadrados){
+      cuadrado.seleccion = false;
+    }
+    // this.cuadrados.forEach((node:any) => {
+    //   node.classList.remove('mole');
+    // });
 
-  this.hitPosition = this.cuadradoAleatorio.id;
+    this.cuadradoAleatorio = this.cuadrados[Math.floor(Math.random() * 9)]
+    this.cuadradoAleatorio.seleccion = true;
+    console.log(this.cuadradoAleatorio);
+    // this.cuadradoAleatorio.classList.add('mole');
+
+    this.hitPosition = this.cuadradoAleatorio.id;
   }
 
-  golpeCarpincho(){
-    this.cuadrados.forEach((cuadrado:any) => {
-    cuadrado.addEventListener('mousedown', () => {
-        if (cuadrado.id == this.hitPosition) {
-          this.result++;
-          this.puntaje.textContent = this.result;
-          this.hitPosition = null
-        }
-      })
-    })
+  golpeCarpincho(e:any, posicion:any){
 
+    const btn = e.target;
+    console.log(btn);
+    console.log(posicion);
+    // const juego = this.turno % 2 ? {col:'red', jugador:'1'} : {col:'green', jugador:'2'}
+    // btn.style.backgroundColor = juego.col;
+    // this.tablero[posicion] = juego.col;
+    // if (this.hasGanado()){
+    //     console.log(this.tablero);
+    //     alert('Bien jugador '+ juego.jugador);
+    // }
   }
 
-  moveMole() {
-    this.timerId = null;
+  // golpeCarpincho(){
 
-    if(this.result<=10)
-    this.timerId = setInterval(this.randomSquare, 1000);
-    if(this.result > 10 && this.result <= 20 )
-    this.timerId = setInterval(this.randomSquare, 1000/1.4);
-    if(this.result > 20 && this.result <= 30 )
-    this.timerId = setInterval(this.randomSquare, 1000/1.5);
-    if(this.result > 30 && this.result <= 40 )
-    this.timerId = setInterval(this.randomSquare, 1000/1.6);
-    if(this.result > 40 && this.result <= 50 )
-    this.timerId = setInterval(this.randomSquare, 1000/1.8);
-    if(this.result > 50 && this.result <= 60 )
-    this.timerId = setInterval(this.randomSquare, 1000/1.9);
-  }
+  //   divCuadrados.forEach((cuadrado:any) => {
+  //   cuadrado.addEventListener('mousedown', () => {
+  //       if (cuadrado.id == this.hitPosition) {
+  //         this.result++;
+  //         this.hitPosition = null
+  //       }
+  //     })
+  //   })
+  // }
 
-  countDown() {
-    this.currentTime--
-    this.tiempoRestante.textContent = this.currentTime
+  // moverCarpincho() {
+  //   this.timerId = null;
 
-    if (this.currentTime == 0) {
+  //   if(this.result<=10)
+  //   this.timerId = setInterval(this.randomSquare(), 1000);
+  //   if(this.result > 10 && this.result <= 20 )
+  //   this.timerId = setInterval(this.randomSquare(), 1000/1.4);
+  //   if(this.result > 20 && this.result <= 30 )
+  //   this.timerId = setInterval(this.randomSquare(), 1000/1.5);
+  //   if(this.result > 30 && this.result <= 40 )
+  //   this.timerId = setInterval(this.randomSquare(), 1000/1.6);
+  //   if(this.result > 40 && this.result <= 50 )
+  //   this.timerId = setInterval(this.randomSquare(), 1000/1.8);
+  //   if(this.result > 50 && this.result <= 60 )
+  //   this.timerId = setInterval(this.randomSquare(), 1000/1.9);
+  // }
+
+  countDown(){
+    this.currentTime--;
+
+    if (this.currentTime == -1) {
       clearInterval(this.countDownTimerId)
       clearInterval(this.timerId)
       alert('GAME OVER! Your final score is ' + this.result)
     }
+  }
 
-    this.countDownTimerId = setInterval(this.countDown, 1000);
+  startJuego(){
+    this.empezo = true;
+    this.randomSquare();
+    this.timer.subscribe(() =>{
+      this.countDown();
+    })
   }
   
 }
+
