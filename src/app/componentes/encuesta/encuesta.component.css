@@ -1,0 +1,11 @@
+.container{
+    margin-top: 100px;
+}
+
+small{
+    color:red !important;
+}
+
+.container .text-left{
+    margin-top: 5px;
+}
