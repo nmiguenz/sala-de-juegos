@@ -1,6 +1,6 @@
 import { Cuadrados } from './../../clases/cuadrados';
-import { Component, ElementRef, OnInit, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
-import { interval } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { interval, fromEvent  } from 'rxjs';
 
 @Component({
   selector: 'app-golpear-carpincho',
@@ -9,35 +9,26 @@ import { interval } from 'rxjs';
 })
 export class GolpearCarpinchoComponent implements OnInit {
 
-  //Flags
-  empezo:boolean = false;
-  terminado:boolean = false;
-
   //elementos
-  cuadrados:Cuadrados[] = [
-    {numero: 1, seleccion : false, id: 1},
-    {numero: 2, seleccion : false, id: 2},
-    {numero: 3, seleccion : false, id: 3},
-    {numero: 4, seleccion : false, id: 4},
-    {numero: 5, seleccion : false, id: 5},
-    {numero: 6, seleccion : false, id: 6},
-    {numero: 7, seleccion : false, id: 7},
-    {numero: 8, seleccion : false, id: 8},
-    {numero: 9, seleccion : false, id: 9}
-  ];
-  tiempoRestante:any;
-  public selector :any; 
-
-  //variables
-  result:number = 0;
-  hitPosition:any;
-  currentTime:number = 60;
-  timerId:any;
-  cuadradoAleatorio:any;
-  countDownTimerId:any;
+  // cuadrados:Cuadrados[] = [
+  //   {seleccion : false, id: 1},
+  //   {seleccion : false, id: 2},
+  //   {seleccion : false, id: 3},
+  //   {seleccion : false, id: 4},
+  //   {seleccion : false, id: 5},
+  //   {seleccion : false, id: 6},
+  //   {seleccion : false, id: 7},
+  //   {seleccion : false, id: 8},
+  //   {seleccion : false, id: 9}
+  // ];
+  lista = ["","","","","","","","carpincho","","","","","","","","","","","",""]
+  tiempoRestante: number = 60;
+  puntos:number = 0;
+  tiempo:number = 1000;
 
   //Observable
   timer = interval(1000);
+  timerCarpincho = interval(this.tiempo);
   
   constructor() {
   }
@@ -45,45 +36,69 @@ export class GolpearCarpinchoComponent implements OnInit {
   // @ViewChildren(Div) squares !: QueryList<Div>; 
   
   ngOnInit(): void {
-    this.selector = document.querySelectorAll('square');
-    console.log(this.selector);
-
-    this.selector.forEach( (element : any, posicion:any) =>
-      element.addEventListener('click', (e : any) => this.golpeCarpincho(e, posicion)));
-    // this.carpincho = document.querySelector('.mole');
-    
   }
 
-  randomSquare() {
+  randomSquare(){
+    this.lista = this.lista.sort(()=> {return Math.random() - 0.5});
+  }
 
-    for (let cuadrado of this.cuadrados){
-      cuadrado.seleccion = false;
+  countDown(){
+    let intervalo = this.timer.subscribe(()=>{
+      this.tiempoRestante -= 1;
+      if(this.tiempoRestante <=0){
+        intervalo.unsubscribe();
+      }
+    })
+  }
+
+  startGame(){
+    this.countDown();
+
+    let moverCarpincho = this.timerCarpincho.subscribe(()=>{
+      this.randomSquare();
+      if(this.tiempoRestante<=0){
+        moverCarpincho.unsubscribe();
+      }
+    });
+  }
+
+  golpeCarpincho(hit: any){
+    if(hit == 'carpincho'){
+      this.puntos ++;
     }
-    // this.cuadrados.forEach((node:any) => {
-    //   node.classList.remove('mole');
-    // });
-
-    this.cuadradoAleatorio = this.cuadrados[Math.floor(Math.random() * 9)]
-    this.cuadradoAleatorio.seleccion = true;
-    console.log(this.cuadradoAleatorio);
-    // this.cuadradoAleatorio.classList.add('mole');
-
-    this.hitPosition = this.cuadradoAleatorio.id;
+    if(this.puntos>9 && this.puntos<=19){
+      this.tiempo = this.tiempo / 1.5;
+    }
+    if(this.puntos>19 && this.puntos<=29){
+      this.tiempo = this.tiempo / 1.7;
+    }
+    if(this.puntos>29 && this.puntos<=39){
+      this.tiempo = this.tiempo / 1.9;
+    }
+    if(this.puntos>39 && this.puntos<=49){
+      this.tiempo = this.tiempo / 2;
+    }
+    if(this.puntos>49 && this.puntos<=59){
+      this.tiempo = this.tiempo / 2.3;
+    } 
   }
 
-  golpeCarpincho(e:any, posicion:any){
 
-    const btn = e.target;
-    console.log(btn);
-    console.log(posicion);
-    // const juego = this.turno % 2 ? {col:'red', jugador:'1'} : {col:'green', jugador:'2'}
-    // btn.style.backgroundColor = juego.col;
-    // this.tablero[posicion] = juego.col;
-    // if (this.hasGanado()){
-    //     console.log(this.tablero);
-    //     alert('Bien jugador '+ juego.jugador);
-    // }
-  }
+  // randomSquare() {
+
+  //   for (let cuadrado of this.cuadrados){
+  //     cuadrado.seleccion = false;
+  //   }
+   
+
+  //   this.cuadrados = this.cuadrados.sort(() =>{ return Math.floor(Math.random() * 9) })
+  //   console.log(this.cuadrados);
+  //   // this.cuadradoAleatorio.classList.add('mole');
+
+  //   // this.hitPosition = this.cuadradoAleatorio.id;
+  // }
+
+  
 
   // golpeCarpincho(){
 
@@ -97,40 +112,24 @@ export class GolpearCarpinchoComponent implements OnInit {
   //   })
   // }
 
-  // moverCarpincho() {
-  //   this.timerId = null;
 
-  //   if(this.result<=10)
-  //   this.timerId = setInterval(this.randomSquare(), 1000);
-  //   if(this.result > 10 && this.result <= 20 )
-  //   this.timerId = setInterval(this.randomSquare(), 1000/1.4);
-  //   if(this.result > 20 && this.result <= 30 )
-  //   this.timerId = setInterval(this.randomSquare(), 1000/1.5);
-  //   if(this.result > 30 && this.result <= 40 )
-  //   this.timerId = setInterval(this.randomSquare(), 1000/1.6);
-  //   if(this.result > 40 && this.result <= 50 )
-  //   this.timerId = setInterval(this.randomSquare(), 1000/1.8);
-  //   if(this.result > 50 && this.result <= 60 )
-  //   this.timerId = setInterval(this.randomSquare(), 1000/1.9);
+  // countDown(){
+  //   this.currentTime--;
+
+  //   if (this.currentTime == 0) {
+  //     clearInterval(this.countDownTimerId)
+  //     clearInterval(this.timerId)
+  //     alert('GAME OVER! Your final score is ' + this.result)
+  //   }
   // }
 
-  countDown(){
-    this.currentTime--;
-
-    if (this.currentTime == 0) {
-      clearInterval(this.countDownTimerId)
-      clearInterval(this.timerId)
-      alert('GAME OVER! Your final score is ' + this.result)
-    }
-  }
-
-  startJuego(){
-    this.empezo = true;
-    this.randomSquare();
-    this.timer.subscribe(() =>{
-      this.countDown();
-    })
-  }
+  // startJuego(){
+  //   this.empezo = true;
+  //   this.randomSquare();
+  //   this.timer.subscribe(() =>{
+  //     this.countDown();
+  //   })
+  // }
   
 }
 

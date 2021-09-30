@@ -1,4 +1,40 @@
-<div *ngIf="terminado==false;">
+<div class="container-inicio d-flex justify-content-center align-items-center" *ngIf="!inicio">
+    <button class="btn btn-primary" (click)="iniciarJuego()">INICIAR JUEGO</button>
+</div>
+
+
+<div class="container text-center" *ngIf="inicio">
+    <div>
+        <h1>PUNTOS: {{puntos}}</h1>
+    </div>
+    
+      <div class="d-flex justify-content-around card-container">
+        <div class="carta-visible">
+            <img src="{{cartaVisible.imagenUrl}}" alt="">
+        </div>
+        <div class="carta-dorso">
+            <div *ngIf="!carta">
+                <img src="../../../assets/imagenes/cartas/dorso.png" alt="">
+            </div>
+            <div *ngIf="carta">
+                <img src="{{cartaInvisible.imagenUrl}}" alt="">
+            </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-around botones m-4">
+          <button class="btn btn-outline-primary" (click)="elegirAccion('mayor')">MAYOR</button>
+          <button class="btn btn-outline-warning" (click)="elegirAccion('igual')">IGUAL</button>
+          <button class="btn btn-outline-success" (click)="elegirAccion('menor')">MENOR</button>
+      </div>
+    
+      <div class="">
+        <h1>ERRORES: <span>{{errores}}</span></h1>
+      </div>
+</div>
+
+
+<!-- <div *ngIf="terminado==false;">
     <div *ngIf="this.empezo==false; else gameBlock">
         <h1 class="h1">Mayor o Menor?<br><span class="colorDisplay">Reglas del juego</span></h1>
         <div class="container">
@@ -26,46 +62,4 @@
 
         </div>
     </div>
-
-    <ng-template #gameBlock>
-        <!-- <h1>Puntos totales: {{puntos}}</h1>
-        <h1>Errores totalse: {{erroresCont}}</h1>
-        <h1>Palabra:</h1>
-        <span>
-            <img src="../../../assets/cartas/Dorso.png">
-        </span>
-        <span>
-            <img src={{imagenUrl}}>
-        </span><br>
-        <button (click)="elegirBoton('menor')"> Menor</button>
-        <button (click)="elegirBoton('igual')"> Igual</button>
-        <button (click)="elegirBoton('mayor')"> Mayor</button> -->
-        <h1 class="h1">Mayor o Menor?<br><span class="colorDisplay">Adivina la siguiente carta</span></h1>
-
-        <div class="stripe">
-            <span class="message">Puntaje: {{puntos}}</span>
-        </div>
-
-        <div class="container">
-            <div class="row">
-
-                <div class="col" style="text-align: left;">
-                    <img src="../../../assets/cartas/Dorso.png">
-                </div>
-                
-                <div class="col" style="text-align:center; margin-top: 150px;">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <button class="btn btn-success" (click)="elegirBoton('menor')"> Menor</button>
-                        <button class="btn btn-secondary" (click)="elegirBoton('igual')"> Igual</button>
-                        <button class="btn btn-danger" (click)="elegirBoton('mayor')"> Mayor</button>  
-                    </div>
-                </div>
-
-                <div class="col" style="text-align: right;">
-                    <img src={{imagenUrl}}>
-                </div>
-                
-            </div>
-        </div>
-    </ng-template>
-</div>
+ -->

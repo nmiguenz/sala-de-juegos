@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { timer } from 'rxjs';
 import { Carta } from 'src/app/clases/carta';
 
 @Component({
@@ -6,133 +7,129 @@ import { Carta } from 'src/app/clases/carta';
   templateUrl: './mayor-menor.component.html',
   styleUrls: ['./mayor-menor.component.css']
 })
-export class MayorMenorComponent implements OnInit {
+export class MayorMenorComponent{
 
-  empezo:boolean;
-  terminado:boolean = false;
-  mensajeFinal:string = '';
-  resultado:boolean = false;
+  errores:number = 0;
+  puntos:number = 0;
+  carta = false;
+  inicio = false;
 
-  cartasUsar:Carta[] = [];
-  ultimaCarta:any;
-  proximaCarta:any;
-  imagenUrl:string|undefined = '';
+  timerShow = timer(2000);
 
-  listaCartas:Carta[] = [{palo: 'oro', numero: 1, imagenUrl: '../../../assets/imagenes/cartas/Oro/1_oro'},
-                        {palo: 'oro', numero: 2, imagenUrl: '../../../assets/imagenes/cartas/Oro/2_oro'},
-                        {palo: 'oro', numero: 3, imagenUrl: '../../../assets/imagenes/cartas/Oro/3_oro'}] ;
-  
-  
-  puntos:number;
-  erroresCont:number;
+  listaCartas:Carta[] = [{palo: 'oro', numero: 1, imagenUrl: '../../../assets/imagenes/cartas/Oro/1_oro.png'},
+                        {palo: 'oro', numero: 2, imagenUrl: '../../../assets/imagenes/cartas/Oro/2_oro.png'},
+                        {palo: 'oro', numero: 3, imagenUrl: '../../../assets/imagenes/cartas/Oro/3_oro.png'},
+                        {palo: 'oro', numero: 4, imagenUrl: '../../../assets/imagenes/cartas/Oro/4_oro.png'},
+                        {palo: 'oro', numero: 5, imagenUrl: '../../../assets/imagenes/cartas/Oro/5_oro.png'},
+                        {palo: 'oro', numero: 6, imagenUrl: '../../../assets/imagenes/cartas/Oro/6_oro.png'}
+                        ];
+
+  mazoCartas = this.listaCartas;
+  cartaVisible : any;
+  cartaInvisible : any;
 
   constructor() {
-    this.empezo = false;
-    this.puntos = 0;
-    this.erroresCont = 0;
-    this.ultimaCarta = {palo:'',numero:0,imagenUrl:''},
-    this.proximaCarta = {palo:'',numero:0,imagenUrl:''};
   }
 
-  ngOnInit(): void {
+  iniciarJuego(){
+    this.inicio = true;
+    this.mezclarMazo();
+    this.seleccionCartas();
   }
 
-  comenzarJuego() {
-    this.cartasUsar = this.mezclar(this.listaCartas.slice());
-    console.info(this.cartasUsar);
-    console.info(this.listaCartas);
-    this.robar();
-    this.empezo = true;
-    this.puntos = 0;
-    this.erroresCont = 0;
+  mezclarMazo(){
+    //Desordeno el array 
+    this.mazoCartas.sort(() => Math.random() - 0.5);
   }
 
-  mezclar(array:any) {
-    console.log(array.imagenUrl);
-    return array.sort(() => Math.random() - 0.5);
+  seleccionCartas(){
+    this.cartaVisible = this.mazoCartas[0];
+    this.cartaInvisible = this.mazoCartas[1];
+    console.log(this.cartaInvisible);
   }
 
-  robar() {
-    this.ultimaCarta = this.cartasUsar?.pop();
-    if(this.cartasUsar.length != 0)
-    {
-      this.proximaCarta = this.cartasUsar[this.cartasUsar.length-1];
-      this.imagenUrl = this.ultimaCarta?.imagenUrl;
-      // console.info(this.ultimaCarta);
-      // console.info(this.proximaCarta);
-    }
-    else
-    {
-      // Swal.fire('Termino el juego!', 'Se robaron todas las cartas', 'success');
-      this.mensajeFinal = 'Se robaron todas las cartas!';
-      this.resultado = true;
-      this.terminarJuego();
+  darVueltaCarta(){
+    if(this.carta){
+      let intervalo = this.timerShow.subscribe(()=>{
+        if(this.errores == 3 || this.mazoCartas.length-1 <2 ){
+          intervalo.unsubscribe();
+          this.finalizarJuego()
+        }
+        else{
+          this.carta = false;
+          console.log(this.mazoCartas.length)
+          this.mazoCartas.splice(0,1);
+          this.seleccionCartas();
+        }
+      })
     }
   }
 
-  elegirBoton(eleccion:string) {
-    if(eleccion == 'mayor')
-    {
-      if(this.proximaCarta.numero > this.ultimaCarta.numero)
-      {
-        this.casoAcierto();
+  //Accion del botón
+  elegirAccion(valorBoton:string){
+
+    if(valorBoton == 'mayor'){
+      this.carta = true;
+
+      if(this.cartaVisible.numero < this.cartaInvisible.numero){
+        console.log('Ganó');
+        this.puntos ++;
       }
-      else
-      {
-        this.casoError();
-      }
-    }
-    else if(eleccion == 'igual') 
-    {
-      if(this.proximaCarta.numero == this.ultimaCarta.numero)
-      {
-        this.casoAcierto();
-      }
-      else
-      {
-        this.casoError();
+      else{
+        console.log('Perdió');
+        if(this.puntos>0){
+          this.puntos --;
+        }
+        this.errores ++;
       }
     }
-    else
-    {
-      if(this.proximaCarta.numero < this.ultimaCarta.numero)
-      {
-        this.casoAcierto();
+
+    else if(valorBoton == 'igual'){
+      this.carta = true;
+
+      if(this.cartaVisible.numero == this.cartaInvisible.numero){
+        console.log('Ganó');
+        this.puntos ++;
       }
-      else
-      {
-        this.casoError();
+      else{
+        console.log('Perdió');
+        if(this.puntos>0){
+          this.puntos --;
+        }
+        this.errores ++;
       }
     }
-  }
 
-  casoError() {
-    this.erroresCont++;
-    if(this.erroresCont >= 10)
-    {
-      // Swal.fire('Perdiste!', 'Llegaste al maximo de errores tu puntuacion final es: '+this.puntos, 'error');
-      this.mensajeFinal = 'Llegaste al maximo de errores permitidos!';
-      this.resultado = false;
-      this.terminarJuego();
+    else{
+      this.carta = true;
+
+      if(this.cartaVisible.numero > this.cartaInvisible.numero){
+        console.log('Ganó');
+        this.puntos ++;
+      }
+      else{
+        console.log('Perdió');
+        if(this.puntos>0){
+          this.puntos --;
+        }
+        this.errores ++;
+      }
     }
-    else
-    {
-      this.robar();
+    
+    this.darVueltaCarta();
+  }
+
+  //Lógica de asignación de puntos
+  //Generar pantalla de final
+  finalizarJuego(){
+    if(this.mazoCartas.length-1 == 1){
+      console.log('Ganaste el juego');
     }
-  }
+    else{
+      console.log('terminó el juego, tus puntos son:'+this.puntos);
 
-  casoAcierto() {
-    this.puntos++;
-    this.robar();
-  }
-
-  terminarJuego() {
-    this.empezo = false;
-    this.terminado = true;
-  }
-
-  reiniciarJuego() {
-    this.terminado = false;
+    }
+    this.inicio = false;
   }
 
 }

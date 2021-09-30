@@ -1,30 +1,27 @@
-.startGame{
-	height: 100vh;
-}
-
-.golpearCarpincho_main{
-	margin-top: 7rem;
-	
-}
-
-.titulo{
-	margin-bottom: 3rem;
+.container{
+	margin-top: 100px;
 }
 
 .grid {
-	width: 303px;
-	height: 303px;
+	width: 60%;
+	height: 60%;
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.square {
+.cuadrado, .carpincho {
 	height: 100px;
 	width: 100px;
 	border: solid black 1px;
+	border-radius: 3px;
+	background-color: aquamarine;
 }
 
-.mole {
+.carpincho {
 	background-image: url("../../../assets/imagenes/carpincho.jpg");
 	background-size: cover;
+}
+
+.carpincho:hover{
+	cursor:pointer;
 }

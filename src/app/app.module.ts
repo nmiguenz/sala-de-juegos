@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -40,8 +41,8 @@ import { ChatComponent } from './componentes/chat/chat.component';
     ReactiveFormsModule,
     ToastrModule.forRoot(), // ToastrModule added,
     BrowserAnimationsModule,
-    FormsModule
-
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

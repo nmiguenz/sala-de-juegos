@@ -1,35 +1,26 @@
-<div *ngIf="terminado==false;">
-  <div *ngIf="this.empezo==false; else hitCarpincho">
-      <div class="container startGame d-flex justify-content-center align-items-center">
-        
-        <div class="row">
-            <button class="btn btn-secondary btn-block" (click)="startJuego()"> Comenzar Juego</button>
-        </div>
-          
 
-      </div>
+<div class="container text-center">
+  <h2 class="text-secondary text-uppercase mb-0">Hit Carpincho</h2>
+  <!-- Icon Divider-->
+  <div class="divider-custom">
+      <div class="divider-custom-line"></div>
+      <div class="divider-custom-icon"><i class="fa fa-bullseye"></i></div>
+      <div class="divider-custom-line"></div>
+  </div>
+  
+  <div>
+    <h3>TIEMPO RESTANTE: <span [ngStyle]="{'color':tiempoRestante <= 5 ? 'red' : 'black' }">{{tiempoRestante}}</span></h3>
+    
   </div>
 
-  <ng-template #hitCarpincho>
-    <main class="container-fluid golpearCarpincho_main">
-      <div class="row text-center titulo">
-        <h1>Golpéa al carpincho</h1>
-      </div>
-      <div class="row container-fluid">
-        <div class="col-8 text-center">
-          <div class="grid" #squares>
-            <div *ngFor="let cuadrado of cuadrados">
-              <div class="col-3" [ngClass] = "{'mole': cuadrado.seleccion == true }" id="cuadrado.id" ></div>
-            </div>
-          </div> 
-        </div>
-        <div class="col-4 text-left">
-          <h2>Puntaje: <span id="score">{{result}}</span></h2>
-            <h2>Tiempo restante:</h2>
+  <div class="grid justify-content-center">
+    <div class="" *ngFor="let cuadrado of lista" [ngClass]="cuadrado == 'carpincho'?'carpincho':'cuadrado'"
+    (click)="golpeCarpincho(cuadrado)"></div>
+    <button class="btn btn-outline-primary" (click)="startGame()">INICIAR JUEGO</button>
+  </div>
 
-            <h2 id="time-left">{{currentTime}}</h2>
-        </div>
-      </div>
-    </main>
-  </ng-template>
+  <div class="text-cente mt-4">
+    <h3>PUNTOS: {{puntos}}</h3>
+  </div>
+
 </div>
