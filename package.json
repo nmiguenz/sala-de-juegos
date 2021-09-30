@@ -48,5 +48,17 @@
   "engines": {
     "node": "v14.17.5",
     "npm": "7.21.1"
-  }
+  },
+  "budgets": [
+    {
+       "type": "initial",
+       "maximumWarning": "4mb",
+       "maximumError": "5mb"
+    },
+    {
+      "type": "anyComponentStyle",
+      "maximumWarning": "7kb",
+      "maximumError": "10kb"
+    }
+ ]
 }
