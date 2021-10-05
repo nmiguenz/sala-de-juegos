@@ -1,4 +1,4 @@
-import { Cuadrados } from './../../clases/cuadrados';
+
 import { Component, OnInit } from '@angular/core';
 import { interval, fromEvent  } from 'rxjs';
 
@@ -9,18 +9,6 @@ import { interval, fromEvent  } from 'rxjs';
 })
 export class GolpearCarpinchoComponent implements OnInit {
 
-  //elementos
-  // cuadrados:Cuadrados[] = [
-  //   {seleccion : false, id: 1},
-  //   {seleccion : false, id: 2},
-  //   {seleccion : false, id: 3},
-  //   {seleccion : false, id: 4},
-  //   {seleccion : false, id: 5},
-  //   {seleccion : false, id: 6},
-  //   {seleccion : false, id: 7},
-  //   {seleccion : false, id: 8},
-  //   {seleccion : false, id: 9}
-  // ];
   lista = ["","","","","","","","carpincho","","","","","","","","","","","",""]
   tiempoRestante: number = 60;
   puntos:number = 0;
@@ -82,54 +70,6 @@ export class GolpearCarpinchoComponent implements OnInit {
       this.tiempo = this.tiempo / 2.3;
     } 
   }
-
-
-  // randomSquare() {
-
-  //   for (let cuadrado of this.cuadrados){
-  //     cuadrado.seleccion = false;
-  //   }
-   
-
-  //   this.cuadrados = this.cuadrados.sort(() =>{ return Math.floor(Math.random() * 9) })
-  //   console.log(this.cuadrados);
-  //   // this.cuadradoAleatorio.classList.add('mole');
-
-  //   // this.hitPosition = this.cuadradoAleatorio.id;
-  // }
-
-  
-
-  // golpeCarpincho(){
-
-  //   divCuadrados.forEach((cuadrado:any) => {
-  //   cuadrado.addEventListener('mousedown', () => {
-  //       if (cuadrado.id == this.hitPosition) {
-  //         this.result++;
-  //         this.hitPosition = null
-  //       }
-  //     })
-  //   })
-  // }
-
-
-  // countDown(){
-  //   this.currentTime--;
-
-  //   if (this.currentTime == 0) {
-  //     clearInterval(this.countDownTimerId)
-  //     clearInterval(this.timerId)
-  //     alert('GAME OVER! Your final score is ' + this.result)
-  //   }
-  // }
-
-  // startJuego(){
-  //   this.empezo = true;
-  //   this.randomSquare();
-  //   this.timer.subscribe(() =>{
-  //     this.countDown();
-  //   })
-  // }
   
 }
 

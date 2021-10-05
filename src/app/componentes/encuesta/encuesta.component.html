@@ -1,6 +1,6 @@
-<div class="container text-center">
+<div class="container container-encuesta mt-3">
     <div class="card" style="width: 60;">
-        <div class="card-header">
+        <div class="card-header text-center text-uppercase text-white bg-dark">
           Encuesta
         </div>
         <div class="container text-left formularioDiv">
@@ -52,7 +52,6 @@
                           </div>
                         <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('gusto')?.hasError('required') && formulario.get('gusto')?.touched">El género es requerido</small>
                     </div>
-
                 </div>
 
                 <div class="form-group">
@@ -60,8 +59,11 @@
                     <textarea class="form-control" id="exampleOpinion" rows="3" formControlName="opinion"></textarea>
                     <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('genero')?.hasError('required') && formulario.get('genero')?.touched">Es necesario dejar una opinión para avanzar</small>
                 </div>
-
-                <button type="submit" class="btn btn-primary mb-2" [disabled]="formulario.invalid">Submit</button>
+                <div class="container">
+                    <div class="row">
+                        <button type="submit" class="btn btn-outline-primary btn-lg btn-block mb-2 mt-2" [disabled]="formulario.invalid">ENVIAR</button>
+                    </div>
+                </div>
             </form>
         </div>
       </div>

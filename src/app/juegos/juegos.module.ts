@@ -1,3 +1,4 @@
+import { ResultadoComponent } from './resultado/resultado.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JuegosRoutingModule } from './juegos-routing.module';
@@ -12,11 +13,12 @@ import { PreguntadosComponent } from './preguntados/preguntados.component';
     AhorcadoComponent,
     MayorMenorComponent,
     GolpearCarpinchoComponent,
-    PreguntadosComponent
+    PreguntadosComponent,
+    ResultadoComponent
   ],
   imports: [
     CommonModule,
-    JuegosRoutingModule
+    JuegosRoutingModule,
   ]
 })
 export class JuegosModule { }

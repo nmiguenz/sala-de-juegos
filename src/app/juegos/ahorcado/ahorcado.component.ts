@@ -1,4 +1,8 @@
+import { User } from './../../clases/user';
+import { AuthService } from 'src/app/servicios/auth.service';
+import { JugadorService } from 'src/app/servicios/jugador.service';
 import { Component, OnInit } from '@angular/core';
+import { PreguntadosServiceService } from 'src/app/servicios/preguntados-service.service';
 
 @Component({
   selector: 'app-ahorcado',
@@ -11,23 +15,46 @@ export class AhorcadoComponent implements OnInit {
   ALPHABET = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
   MAX_ATTEMPTS = 6;
   MASK_CHAR = "_";
+  inicio = false;
 
   letras : any[] = []; //Letras del abecedario
-  palabras : string[] = ['elefante', 'ferrocarril', 'codigo'];
+  // palabras : string[] = ['elefante', 'ferrocarril', 'codigo'];
+  palabra : any;
   palabraOculta : any[] = [] ;
   intentosRestantes:number = 6;
+  palabraElegida:string = '';
 
-  palabraElegida:string = ''
+  //Jugador
+  jugador : User | any;
+  puntos : number = 0;
+  puntosTotales : number = 0;
   
-  constructor() { }
+  constructor(private palabrasSrv : PreguntadosServiceService,
+              private puntajeSrv : JugadorService,
+              private userSrv : AuthService) { }
 
   ngOnInit(): void {
-    this.resetGame();
+    this.jugador = this.datosJugador();
+    console.log(this.jugador);
   }
 
-  palabraAlAzar(){
-    this.palabraElegida = this.palabras[Math.floor(Math.random()* this.palabras.length)];
-    this.separaPalabra(this.palabraElegida);
+  //Lo comento por la inclusión del servicio
+  // palabraAlAzar(){
+  //   this.palabraElegida = this.palabras[Math.floor(Math.random()* this.palabras.length)];
+  //   this.separaPalabra(this.palabraElegida);
+  // }
+
+  //Obtengo la palabra del servicio
+  async obtenerPalabra() : Promise<any> {
+    try {
+      return await this.palabrasSrv.getPalabras().subscribe( (dato : any)=>{
+        this.palabra = dato;
+        this.separaPalabra(this.palabra.body.Word);
+        console.log(this.palabra.body.Word);
+      });
+    } catch (error) {
+      console.log('Error en obtenerPalabra', error);
+    }
   }
 
   separaPalabra(palabra: string) {
@@ -40,46 +67,51 @@ export class AhorcadoComponent implements OnInit {
     }
   }
 
+  iniciarJuego(){
+    this.inicio = true;
+    this.obtenerPalabra();
+    this.setupLetras();
+  }
+
   resetGame() {
     this.palabraOculta = [];
     this.resetAttempts();
-    this.palabraAlAzar();
+    this.obtenerPalabra();
     this.setupLetras();
   }
-  
-  //Arreglar este juego
-  checkGameStatus() {
-    if (this.playerWins()) {
-        console.log('gano');
-        this.resetGame();
-    }
-    if (this.playerLoses()) {
-      console.log('perdio');
-        this.resetGame();
-    }
-  }
-
-  // getUnhiddenWord() {
-  //   let word = "";
-  //   for (let letter of this.palabraOculta) {
-  //       word += letter.letra;
-  //   }
-  //   return word;
-  // }
 
   playerWins() {
-      // If there's at least a hidden letter, the player hasn't win yet
-      for (let letter of this.palabraOculta) {
-          if (letter.hidden) {
-              return false;
-          }
-      }
-      return true;
+    // If there's at least a hidden letter, the player hasn't win yet
+    for (let letter of this.palabraOculta) {
+        if (letter.hidden) {
+            return false;
+        }
+    }
+    return true;
   }
 
   playerLoses() {
       return this.intentosRestantes <= 0;
   }
+  
+  datosJugador(){
+    this.userSrv.isLoggedIn().subscribe();
+  }
+
+  //Arreglar este juego
+  checkGameStatus() {
+    if (this.playerWins()) {
+        console.log(this.datosJugador());
+        console.log('gano');
+        this.resetGame();
+    }
+    if (this.playerLoses()) {
+      console.log(this.datosJugador());
+      console.log('perdio');
+        this.resetGame();
+    }
+  }
+
         
   imagePath() {
       return '../../../assets/imagenes/Ahorcado/ahorcado_'+ (this.MAX_ATTEMPTS - this.intentosRestantes) +'.png';

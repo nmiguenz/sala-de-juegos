@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { User } from '../clases/user';
-import { first } from 'rxjs/operators'; //importa FIRST()
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +19,7 @@ export class AuthService {
     try {
       return await this.auth.signInWithEmailAndPassword(user.email!,user.password);
     } catch (error) {
+      console.log('Error en login de AuthService' ,error);
     } 
   }
 
@@ -28,7 +27,7 @@ export class AuthService {
     try {
       return await this.auth.createUserWithEmailAndPassword(user.email!, user.password);
     } catch (error) {
-      console.log('Error al crear User', error);
+      console.log('Error en register de AuthService' ,error);
     }
   }
 

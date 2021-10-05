@@ -47,9 +47,10 @@ export class RegisterComponent implements OnInit {
             if(arg){
               this.user.iduser = arg.uid;
 
+              let jugador : any;
             //Log de ingreso a la plataforma
-            this.jugador = this.logIngreso(this.user.iduser);
-            this.jugadorSrv.agregarLogJugador(this.jugador);
+            jugador = this.logIngreso(this.user.iduser);
+            this.jugadorSrv.alta(this.jugador, 'logsLoginRegister');
             }
             else
               this.user.iduser = ''
@@ -66,13 +67,12 @@ export class RegisterComponent implements OnInit {
   }
 
   logIngreso(id:string){
+
     return this.jugador = {
       iduser: id,
       email : this.registerForm.value.email,
       fechaIngreso: new Date()
     }
-
-    console.log(this.jugador);
   }
 
 }

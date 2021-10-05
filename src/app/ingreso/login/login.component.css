@@ -1,11 +1,16 @@
-body {
-    background: #222D32 !important;
+.login-row{
+    height: 100vh !important;
+}
+
+.container-login {
+    background-color: #222D32 !important;
     font-family: 'Roboto', sans-serif;
+
 }
 
 .login-box {
-    margin-top: 75px;
-    height: auto;
+    margin-top: 2rem;
+    height: 80vh;
     background: #1A2226;
     text-align: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);

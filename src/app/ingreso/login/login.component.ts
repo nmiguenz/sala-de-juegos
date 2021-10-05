@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from './../../clases/user';
@@ -11,13 +11,11 @@ import { AuthService } from 'src/app/servicios/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent{
 
   public loginForm : FormGroup;
 
   user : User = new User();
-  
-  jugador : any;
 
   constructor(
     private auth:AuthService, 
@@ -32,16 +30,6 @@ export class LoginComponent implements OnInit {
       })
   }
 
-  ngOnInit(): void {
-
-    //Limpio los campos del form
-    // this.loginForm.reset({
-    //   email : '',
-    //   password : ''
-    // });
-    
-  }
-  
   //Pasos después de que el servicio devuelve el estado del login
   async onLogin(){
     this.user = this.loginForm.value;
@@ -49,18 +37,16 @@ export class LoginComponent implements OnInit {
     try {
       const result = await this.auth.login(this.user);
       if(result){
-
         //Obtengo el ID de inicio de sesión
         this.auth.isLoggedIn().subscribe(arg => {
           if(arg){
             this.user.iduser = arg.uid;
 
+            let jugador : any
             //Log de ingreso a la plataforma
-            this.jugador = this.logIngreso(this.user.iduser);
-            
-            this.jugadorSrv.agregarLogJugador(this.jugador);
-            this.jugador = ''; 
-
+            jugador = this.logIngreso(this.user.iduser);
+            this.jugadorSrv.alta(jugador, 'logsLoginRegister');
+            jugador = ''; 
           }
           else
             this.user.iduser = ''
@@ -70,23 +56,16 @@ export class LoginComponent implements OnInit {
         this.route.navigate(['']);
       }
     } catch (error) {
-      console.log(error);
+      console.log('Error en onLogin loginComponent. ',error);
     }
-    
   }
 
   logIngreso(id:string){
-
-    return this.jugador = {
+    return {
       iduser: id,
       email : this.loginForm.value.email,
       fechaIngreso: new Date()
     }
-
-    // this.jugadorSrv.agregarLogJugador(this.jugador).then(()=>{
-    // }).catch(error =>{
-    //   console.log(error)
-    // })
   }
 
   //Completa el login con un usuario de test

@@ -1,3 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid container-nav">
+
+    <a class="navbar-brand text-uppercase font-weight-bold" [routerLink]="['']">SALA DE JUEGOS</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <div class="d-flex justify-content-end">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li class="nav-item" *ngIf="!isLogged">
+            <a class="nav-link rounded"
+            [routerLink]="['/ingreso/login']"
+            routerLinkActive="active"
+            >Login</a>
+          </li>
+          <li class="nav-item" *ngIf="!isLogged">
+            <a class="nav-link"
+            [routerLink]="['/ingreso/registro']"
+            routerLinkActive="active">Registro</a>
+          </li>
+          <li class="nav-item" *ngIf="!isLogged">
+            <a class="nav-link" 
+            [routerLink]="['/quien-soy']"
+            routerLinkActive="active">¿Quién soy?</a>
+          </li>
+          <li class="nav-item" *ngIf="isLogged">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#juegos">Juegos</a>
+          </li>
+          <li class="nav-item" *ngIf="isLogged">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded" role="button" (click)="onLogout()">Logout</a>
+          </li>
+          <li class="nav-item" *ngIf="isLogged">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded" role="button" [routerLink]="['/encuesta']">Encuesta</a>
+          </li>
+          <li class="nav-item" *ngIf="isLogged">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded">{{user?.email}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- 
 <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
     <div class="container">
         <a class="navbar-brand" [routerLink]="['']">Sala de Juegos</a>
@@ -40,4 +86,4 @@
             </ul>
         </div>
     </div>
-  </nav>
+  </nav> -->

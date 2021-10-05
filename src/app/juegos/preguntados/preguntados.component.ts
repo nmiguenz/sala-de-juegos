@@ -102,7 +102,3 @@ export class PreguntadosComponent implements OnInit {
   }
 
 }
-
-  //  btnAleatorio(){}
-
-  //http://www.geonames.org/flags/x/ar.gif
