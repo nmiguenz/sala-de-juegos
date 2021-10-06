@@ -1,7 +1,7 @@
-import { Puntaje } from './../../clases/puntaje';
+import { Jugador } from './../../clases/jugador';
 import { User } from './../../clases/user';
 import { AuthService } from 'src/app/servicios/auth.service';
-import { JugadorService } from 'src/app/servicios/jugador.service';
+import { dbService } from 'src/app/servicios/db.service';
 import { Component, OnInit } from '@angular/core';
 import { PreguntadosServiceService } from 'src/app/servicios/preguntados-service.service';
 
@@ -11,6 +11,7 @@ import { PreguntadosServiceService } from 'src/app/servicios/preguntados-service
   styleUrls: ['./ahorcado.component.css']
 })
 export class AhorcadoComponent implements OnInit {
+
 
   //Constantes
   ALPHABET = "AÁBCDEÉFGHIÍJKLMNÑOÓPQRSTUÚVWXYZ";
@@ -33,15 +34,15 @@ export class AhorcadoComponent implements OnInit {
   palabraElegida:string = '';
 
   //Jugador
-  jugadorSrv : User | any;
-  jugador: Puntaje | any;
+  user : User | any;
+  jugador: Jugador | any; 
   puntosActuales : number = 0;
   puntosHistóricos : number = 0;
   puntosTotales : number = 0;
   
   constructor(private palabrasSrv : PreguntadosServiceService,
-              private puntajeSrv : JugadorService,
-              private userSrv : AuthService) { }
+              private jugadorSrv : dbService,
+              private authSrv : AuthService) { }
 
   ngOnInit(): void {
     this.obtenerJugador();
@@ -77,8 +78,9 @@ export class AhorcadoComponent implements OnInit {
   }
 
   obtenerJugador(){
-    this.userSrv.isLoggedIn().subscribe(user =>{
-      this.jugadorSrv = user;
+   this.authSrv.isLoggedIn().subscribe(data =>{
+        this.user = data;
+        console.log(this.user.email, this.user.uid);
     })
   }
 
@@ -193,16 +195,21 @@ export class AhorcadoComponent implements OnInit {
 
   altaResultados(){
 
-    this.puntajeSrv.getById(this.jugadorSrv.uid, 'puntajes').subscribe( data =>{
-      console.log(data.payload.data()) //payload.data() => obtiene los datos particulares de ese objeto
-      console.log(data.payload.data()['id']) //payload.data() => obtiene un dato particular de ese objeto, en este caso nombre
-    });
+    this.jugador = new Jugador();
 
-    console.log(this.jugadorSrv.email);
-    console.log('auth ',this.jugadorSrv.uid)
-    // console.log(this.jugador);
-    // console.log(this.jugador['ahorcado']);
+    this.jugador['id'] = this.user.uid;
+    this.jugador['user'] = this.user.email;
+    this.jugador['ahorcado'] = this.puntosActuales;
+    this.jugador['puntosActuales'] = this.puntosActuales;
+    this.jugador['puntosTotales'] = (this.puntosTotales + this.puntosActuales);
+    // this.jugador['mayorMenor'] = 0;
+    // this.jugador['preguntados'] = 0;
+    // this.jugador['hitCarpincho'] = 0;
+    this.jugador['fechaActualizacion'] = new Date();
 
+    console.log(this.jugador);
+    this.jugadorSrv.alta(this.jugador, 'puntajes');
+    
     // if(this.jugador){
     //   console.log('1');
     //   this.puntosHistóricos = this.jugador['ahorcado'];

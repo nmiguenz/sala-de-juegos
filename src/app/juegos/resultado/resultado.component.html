@@ -37,10 +37,15 @@
     <div class="card" style="width: 25rem;">
       <div class="card-body">
         <h5 class="card-title text-center text-uppercase">Resultado</h5>
-        <p class="card-text">Jugador: <span>Nombre</span></p>
-        <p class="card-text">Puntos: <span>Nombre</span></p>
-        <p class="card-text">Mayor puntaje: <span>Nombre</span></p>
-        <p class="card-text">Puntaje total: <span>Nombre</span></p>
+        <p class="card-text">Jugador: <span>{{jugador.user}}</span></p>
+         <p class="card-text" [ngSwitch]="nombreJuego">Puntos: 
+           <span *ngSwitchCase="'Ahorcado'">{{jugador.ahorcado}}</span> <!--Acá va el puntaje histórico del juego -->
+           <span *ngSwitchCase="'Hit Carpincho'">{{jugador.hitCarpincho}}</span>
+           <span *ngSwitchCase="'Mayor o menor'">{{jugador.hitCarpincho}}</span>
+           <!-- <span *ngSwitchCase="'Hit Carpincho'">{{jugador.hitCarpincho}}</span> -->
+          </p>
+        <p class="card-text">Mayor puntaje: <span>{{jugador.puntosActuales}}</span></p>
+        <p class="card-text">Puntaje total: <span>{{jugador.puntosTotales}}</span></p>
         <div class="d-flex justify-content-around">
           <button class="btn btn-primary" (click)="enviarEvento()">Volver a jugar</button>
           <button class="btn btn-primary" [routerLink]="['']">Salir</button>

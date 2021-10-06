@@ -3,7 +3,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { User } from './../../clases/user';
 import { ToastrService } from 'ngx-toastr';
-import { JugadorService } from './../../servicios/jugador.service';
+import { dbService } from '../../servicios/db.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class LoginComponent{
     private auth:AuthService, 
     private route:Router, 
     private fb: FormBuilder,
-    private jugadorSrv: JugadorService,
+    private jugadorSrv: dbService,
     private toastr: ToastrService) {
       
       this.loginForm = this.fb.group({

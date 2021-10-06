@@ -1,14 +1,14 @@
-<div class="container-inicio d-flex justify-content-center align-items-center" *ngIf="!inicio">
-    <button class="btn btn-primary" (click)="iniciarJuego()">INICIAR JUEGO</button>
-</div>
-
+<app-iniciar-juego *ngIf="!inicio" 
+                    [nombre]="nombreJuego" 
+                    (iniciarJuegoEvent)="iniciarJuego()">
+</app-iniciar-juego>
 
 <div class="container text-center" *ngIf="inicio">
     <div>
         <h1 class="font-weight-bold mb-4">Mayor o menor</h1>
       </div>
     <div>
-        <h1>PUNTOS: {{puntos}}</h1>
+        <h1>PUNTOS: {{puntosActuales}}</h1>
     </div>
     
       <div class="d-flex justify-content-around card-container">
@@ -36,4 +36,9 @@
       </div>
 </div>
 
-<app-resultado *ngIf="resultado" (reiniciarJuegoEvent)="iniciarJuego()"></app-resultado>
+<app-resultado *ngIf="resultadocomp" 
+                [flagGp]="ganoPerdio" 
+                [flagGano]="gano"
+                [jugadorResult]="jugador" 
+                (reiniciarJuegoEvent)="reiniciarJuego()">
+</app-resultado>

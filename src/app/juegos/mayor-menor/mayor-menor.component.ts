@@ -1,22 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { timer } from 'rxjs';
 import { Carta } from 'src/app/clases/carta';
+import { Jugador } from 'src/app/clases/jugador';
+import { User } from 'src/app/clases/user';
+import { AuthService } from 'src/app/servicios/auth.service';
+import { dbService } from 'src/app/servicios/db.service';
 
 @Component({
   selector: 'app-mayor-menor',
   templateUrl: './mayor-menor.component.html',
   styleUrls: ['./mayor-menor.component.css']
 })
-export class MayorMenorComponent{
+export class MayorMenorComponent implements OnInit{
 
-  errores:number = 0;
-  puntos:number = 0;
-  carta = false;
+  //Banderas
   inicio = false;
-  resultado = false;
+  carta = false;
+  resultadocomp = false; //Abre componente Resultado
+  ganoPerdio = false; //Abre componente Resultado => gano/perdio
+  gano = false; //Muestra componente si gano
 
-  timerShow = timer(1000);
-
+  //Constantes
+  nombreJuego = 'Mayor o menor';
   listaCartas:Carta[] = [{palo: 'oro', numero: 1, imagenUrl: '../../../assets/imagenes/cartas/Oro/1_oro.png'},
                         {palo: 'oro', numero: 2, imagenUrl: '../../../assets/imagenes/cartas/Oro/2_oro.png'},
                         {palo: 'oro', numero: 3, imagenUrl: '../../../assets/imagenes/cartas/Oro/3_oro.png'},
@@ -70,19 +75,44 @@ export class MayorMenorComponent{
   cartaVisible : any;
   cartaInvisible : any;
 
+  //Observable
+  timerShow = timer(1000);
 
-  constructor() {
+  //Jugador
+  jugadorSrv : User | any;
+  jugador: Jugador | any; 
+  puntosActuales : number = 0;
+  puntosHistóricos : number = 0;
+  puntosTotales : number = 0;
+  errores:number = 0;
+
+  
+  constructor(private puntajeSrv : dbService,
+              private userSrv : AuthService) { }
+    
+  ngOnInit(): void {
+    this.obtenerJugador();
   }
 
   iniciarJuego(){
-    this.resultado = false;
     this.inicio = true;
     this.mezclarMazo();
     this.seleccionCartas();
   }
 
-  //Armarla
-  //reiniciarJuego()
+  reiniciarJuego() {
+    this.resultadocomp = false;
+    this.ganoPerdio = false; 
+    this.gano = false;
+    this.mezclarMazo();
+    this.seleccionCartas();
+  }
+
+  obtenerJugador(){
+    this.userSrv.isLoggedIn().subscribe(user =>{
+      this.jugadorSrv = user;
+    })
+  }
 
   mezclarMazo(){
     //Desordeno el array 
@@ -117,11 +147,11 @@ export class MayorMenorComponent{
       this.carta = true;
 
       if(this.cartaVisible.numero < this.cartaInvisible.numero){
-        this.puntos ++;
+        this.puntosActuales ++;
       }
       else{
-        if(this.puntos>0){
-          this.puntos --;
+        if(this.puntosActuales>0){
+          this.puntosActuales --;
         }
         this.errores ++;
       }
@@ -132,12 +162,12 @@ export class MayorMenorComponent{
 
       if(this.cartaVisible.numero == this.cartaInvisible.numero){
         console.log('Ganó');
-        this.puntos ++;
+        this.puntosActuales ++;
       }
       else{
         console.log('Perdió');
-        if(this.puntos>0){
-          this.puntos --;
+        if(this.puntosActuales>0){
+          this.puntosActuales --;
         }
         this.errores ++;
       }
@@ -148,12 +178,12 @@ export class MayorMenorComponent{
 
       if(this.cartaVisible.numero > this.cartaInvisible.numero){
         console.log('Ganó');
-        this.puntos ++;
+        this.puntosActuales ++;
       }
       else{
         console.log('Perdió');
-        if(this.puntos>0){
-          this.puntos --;
+        if(this.puntosActuales>0){
+          this.puntosActuales --;
         }
         this.errores ++;
       }
@@ -162,20 +192,37 @@ export class MayorMenorComponent{
     this.darVueltaCarta();
   }
 
-  //Lógica de asignación de puntos
+  altaResultados(){
+
+    this.jugador = new Jugador();
+
+    this.jugador['id'] = this.jugadorSrv.uid;
+    this.jugador['user'] = this.jugadorSrv.email;
+    this.jugador['mayorMenor'] = this.puntosActuales;
+    this.jugador['puntosActuales'] = this.puntosActuales;
+    this.jugador['puntosTotales'] = (this.puntosTotales + this.puntosActuales);
+    this.jugador['fechaActualizacion'] = new Date();
+
+    console.log(this.jugador);
+
+  }
+  //Lógica de asignación de puntosActuales
   //Generar pantalla de final
   finalizarJuego(){
     if(this.mazoCartas.length-1 == 1){
-      this.resultado = true;
-      console.log('Ganaste el juego');
+      this.altaResultados();
+      this.resultadocomp = true;
+      this.ganoPerdio = true;
+      this.gano = true;
 
     }
     else{
-      console.log('terminó el juego, tus puntos son:'+this.puntos);
-      this.resultado = true;
+      this.resultadocomp = true;
+      this.ganoPerdio = true;
+      console.log('terminó el juego, tus puntosActuales son:'+this.puntosActuales);
+      // this.resultado = true;
 
     }
-    this.inicio = false;
   }
 
 }

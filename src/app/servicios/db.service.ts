@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class JugadorService {
+export class dbService {
 
   constructor( private firestore:AngularFirestore) { }
 
@@ -46,7 +46,12 @@ export class JugadorService {
   }
 
   //Obtengo todos los jugadores con puntaje
-  getById(id:string, nombreColeccion:string) : Observable<any> {
-      return this.firestore.collection(nombreColeccion).doc(id).snapshotChanges();
-  }
+  async getById(id:string, nombreColeccion:string) { 
+      try {
+        return await this.firestore.collection(nombreColeccion).doc(id).get();
+      } catch (error) {
+        console.log('Error en getAll jugadorService: ',error);      
+        return error;
+      }
+    }
 }
