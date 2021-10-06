@@ -23,31 +23,34 @@ export class ChatComponent implements OnInit {
 
   constructor(public chatSrv: ChatServiceService,
     private auth: AuthService) {
-    this.chatSrv.cargarMensaje()
-      .subscribe(() => {
-        // Le agrego el TimeOut para que le de tiempo a cargar los mensajes
-        setTimeout(() => {
-          this.scrollToTheLastElementByClass();
-          // this.elemento.scrollTop = this.elemento.scrollHeight;
-        }, 500)
-      });
-
-    this.auth.isLoggedIn().subscribe(user => {
-      if (!user) {
-        return
-      } else {
-        this.usuarioLogueado.iduser = user.uid;
-        this.usuarioLogueado.email = user.email!;
-      }
-    })
+      this.auth.isLoggedIn().subscribe(user => {
+        if (!user) {
+          return
+        } else {
+          this.usuarioLogueado.iduser = user.uid;
+          this.usuarioLogueado.email = user.email!;
+        }
+      })
   }
 
   ngOnInit(): void {
-    console.log(this.elemento)
-    //agarro el elemento
-    this.elemento = document.getElementById('divMensajes');
+
+   
+
   }
 
+
+  openChats(){
+    this.openChat = true;
+    this.chatSrv.cargarMensaje()
+    .subscribe(() => {
+      // Le agrego el TimeOut para que le de tiempo a cargar los mensajes
+      setTimeout(() => {
+        this.scrollToTheLastElementByClass();
+        // this.elemento.scrollTop = this.elemento.scrollHeight;
+      }, 50)
+    });
+  }
 
   enviarMensaje() {
     this.chatSrv.agregarMensaje(this.mensaje, this.usuarioLogueado)

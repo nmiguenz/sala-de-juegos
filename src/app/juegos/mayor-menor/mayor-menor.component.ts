@@ -15,7 +15,7 @@ export class MayorMenorComponent{
   inicio = false;
   resultado = false;
 
-  timerShow = timer(1500);
+  timerShow = timer(1000);
 
   listaCartas:Carta[] = [{palo: 'oro', numero: 1, imagenUrl: '../../../assets/imagenes/cartas/Oro/1_oro.png'},
                         {palo: 'oro', numero: 2, imagenUrl: '../../../assets/imagenes/cartas/Oro/2_oro.png'},
@@ -81,6 +81,9 @@ export class MayorMenorComponent{
     this.seleccionCartas();
   }
 
+  //Armarla
+  //reiniciarJuego()
+
   mezclarMazo(){
     //Desordeno el array 
     this.mazoCartas.sort(() => Math.random() - 0.5);
@@ -94,9 +97,9 @@ export class MayorMenorComponent{
   darVueltaCarta(){
     if(this.carta){
       let intervalo = this.timerShow.subscribe(()=>{
-        if(this.errores == 3 || this.mazoCartas.length-1 <2 ){
+        if(this.errores >= 3 || this.mazoCartas.length-1 <2 ){
           intervalo.unsubscribe();
-          this.finalizarJuego()
+          this.finalizarJuego();
         }
         else{
           this.carta = false;
@@ -114,11 +117,9 @@ export class MayorMenorComponent{
       this.carta = true;
 
       if(this.cartaVisible.numero < this.cartaInvisible.numero){
-        console.log('Ganó');
         this.puntos ++;
       }
       else{
-        console.log('Perdió');
         if(this.puntos>0){
           this.puntos --;
         }
@@ -171,6 +172,7 @@ export class MayorMenorComponent{
     }
     else{
       console.log('terminó el juego, tus puntos son:'+this.puntos);
+      this.resultado = true;
 
     }
     this.inicio = false;

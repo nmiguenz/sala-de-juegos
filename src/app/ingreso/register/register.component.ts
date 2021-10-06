@@ -62,6 +62,10 @@ export class RegisterComponent implements OnInit {
       }
     }
     catch(error){
+      this.toastr.error('El usuario se creo con éxito', 'Nuevo usuario',{
+        timeOut:3000,
+        positionClass:'toast-bottom-right'
+      });
       console.log(error);
     }
   }

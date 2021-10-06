@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="container-result">
+  
+    </div>
+    <div class="d-flex align-items-center justify-content-center container-card">
+  
+      <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 25rem;">
+        <div class="card-body">
+          <h3 class="card-title text-center text-uppercase">{{nombreJuego}}</h3>
+          <div class="divider-custom2">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fa fa-bullseye"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <h5 class="text-center font-italic mt-4 mb-4" >¿Estás listo?</h5>
+          <div class="d-flex justify-content-around">
+            <button class="btn btn-custom" (click)="iniciarJuegoE()">Iniciar</button>
+            <button class="btn btn-danger" [routerLink]="['']">Salir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

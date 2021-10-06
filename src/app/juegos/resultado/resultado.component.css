@@ -18,3 +18,12 @@
     z-index: 2;
 
   }
+
+  .card-header h3{
+    margin-left: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  img{
+    width: 20%;
+  }

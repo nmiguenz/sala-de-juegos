@@ -33,23 +33,26 @@ export class LoginComponent{
   //Pasos después de que el servicio devuelve el estado del login
   async onLogin(){
     this.user = this.loginForm.value;
+    let primeraVez = true;
 
     try {
       const result = await this.auth.login(this.user);
       if(result){
         //Obtengo el ID de inicio de sesión
         this.auth.isLoggedIn().subscribe(arg => {
-          if(arg){
-            this.user.iduser = arg.uid;
-
-            let jugador : any
-            //Log de ingreso a la plataforma
-            jugador = this.logIngreso(this.user.iduser);
-            this.jugadorSrv.alta(jugador, 'logsLoginRegister');
-            jugador = ''; 
-          }
-          else
-            this.user.iduser = ''
+            if(arg && primeraVez){
+              primeraVez = false;
+              this.user.iduser = arg.uid;
+  
+              let jugador : any
+              //Log de ingreso a la plataforma
+              jugador = this.logIngreso(this.user.iduser);
+              this.jugadorSrv.alta(jugador, 'logsLoginRegister');
+              console.log('me repito');
+              jugador = ''; 
+            }
+            else
+              this.user.iduser = '';
         });
         
         //Redirect to the route

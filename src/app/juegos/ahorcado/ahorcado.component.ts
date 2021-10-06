@@ -1,3 +1,4 @@
+import { Puntaje } from './../../clases/puntaje';
 import { User } from './../../clases/user';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { JugadorService } from 'src/app/servicios/jugador.service';
@@ -12,11 +13,18 @@ import { PreguntadosServiceService } from 'src/app/servicios/preguntados-service
 export class AhorcadoComponent implements OnInit {
 
   //Constantes
-  ALPHABET = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+  ALPHABET = "AÁBCDEÉFGHIÍJKLMNÑOÓPQRSTUÚVWXYZ";
   MAX_ATTEMPTS = 6;
   MASK_CHAR = "_";
-  inicio = false;
+  nombreJuego = 'Ahorcado';
 
+  //Banderas
+  inicio = false;
+  resultadocomp = false; //Abre componente Resultado
+  ganoPerdio = false; //Abre componente Resultado => gano/perdio
+  gano = false; //Muestra componente si gano
+
+  //Palabra
   letras : any[] = []; //Letras del abecedario
   // palabras : string[] = ['elefante', 'ferrocarril', 'codigo'];
   palabra : any;
@@ -25,8 +33,10 @@ export class AhorcadoComponent implements OnInit {
   palabraElegida:string = '';
 
   //Jugador
-  jugador : User | any;
-  puntos : number = 0;
+  jugadorSrv : User | any;
+  jugador: Puntaje | any;
+  puntosActuales : number = 0;
+  puntosHistóricos : number = 0;
   puntosTotales : number = 0;
   
   constructor(private palabrasSrv : PreguntadosServiceService,
@@ -34,8 +44,7 @@ export class AhorcadoComponent implements OnInit {
               private userSrv : AuthService) { }
 
   ngOnInit(): void {
-    this.jugador = this.datosJugador();
-    console.log(this.jugador);
+    this.obtenerJugador();
   }
 
   //Lo comento por la inclusión del servicio
@@ -67,13 +76,22 @@ export class AhorcadoComponent implements OnInit {
     }
   }
 
+  obtenerJugador(){
+    this.userSrv.isLoggedIn().subscribe(user =>{
+      this.jugadorSrv = user;
+    })
+  }
+
   iniciarJuego(){
     this.inicio = true;
     this.obtenerPalabra();
     this.setupLetras();
   }
 
-  resetGame() {
+  reiniciarJuego() {
+    this.resultadocomp = false;
+    this.ganoPerdio = false; 
+    this.gano = false;
     this.palabraOculta = [];
     this.resetAttempts();
     this.obtenerPalabra();
@@ -86,29 +104,26 @@ export class AhorcadoComponent implements OnInit {
         if (letter.hidden) {
             return false;
         }
-    }
+      }
     return true;
   }
 
   playerLoses() {
       return this.intentosRestantes <= 0;
   }
-  
-  datosJugador(){
-    this.userSrv.isLoggedIn().subscribe();
-  }
 
   //Arreglar este juego
   checkGameStatus() {
     if (this.playerWins()) {
-        console.log(this.datosJugador());
-        console.log('gano');
-        this.resetGame();
+        this.puntosActuales = (this.palabra.body.Word.length * 10)
+        this.altaResultados();
+        this.resultadocomp = true;
+        this.ganoPerdio = true;
+        this.gano = true;
     }
     if (this.playerLoses()) {
-      console.log(this.datosJugador());
-      console.log('perdio');
-        this.resetGame();
+        this.resultadocomp = true;
+        this.ganoPerdio = true;
     }
   }
 
@@ -156,17 +171,14 @@ export class AhorcadoComponent implements OnInit {
   }
 
   discoverLetter(letraSelect:string) {
-    
     this.palabraOculta.forEach((letra) =>{
       if(letra.letra == letraSelect){
         letra.hidden = false
       }
     })
-
 }
 
   attemptWithLetter(letraSelect:any) {
-  
     let index = this.letras.indexOf(letraSelect)
     this.letras[index].disabled = true;
     
@@ -178,5 +190,60 @@ export class AhorcadoComponent implements OnInit {
     this.checkGameStatus();
   }
 
-  
+
+  altaResultados(){
+
+    this.puntajeSrv.getById(this.jugadorSrv.uid, 'puntajes').subscribe( data =>{
+      console.log(data.payload.data()) //payload.data() => obtiene los datos particulares de ese objeto
+      console.log(data.payload.data()['id']) //payload.data() => obtiene un dato particular de ese objeto, en este caso nombre
+    });
+
+    console.log(this.jugadorSrv.email);
+    console.log('auth ',this.jugadorSrv.uid)
+    // console.log(this.jugador);
+    // console.log(this.jugador['ahorcado']);
+
+    // if(this.jugador){
+    //   console.log('1');
+    //   this.puntosHistóricos = this.jugador['ahorcado'];
+    //   this.puntosTotales = this.jugador.puntosTotales;
+
+    //   //Si la mayor puntuación en Ahorcado no es la actual...
+    //   if(this.puntosHistóricos > this.puntosActuales){
+    //     this.jugador.id = this.jugadorSrv.uid;
+    //     this.jugador.user = this.jugadorSrv.email;
+    //     this.jugador.ahorcado = this.puntosHistóricos;
+    //     this.jugador.puntosTotales = (this.jugador.puntosTotales + this.puntosActuales);
+    //     this.jugador.fechaActualizacion = new Date();
+
+    //     //Update en Firebase
+    //     this.puntajeSrv.update(this.jugadorSrv.uid, 'puntajes',this.jugador);
+
+    //   }
+    //   //Si la mayor puntuación en Ahorcado es la actual...
+    //   else{
+    //     this.jugador.id = this.jugadorSrv.uid;
+    //     this.jugador.user = this.jugadorSrv.email;
+    //     this.jugador.ahorcado = this.puntosActuales;
+    //     this.jugador.puntosTotales = (this.jugador.puntosTotales + this.puntosActuales);
+    //     this.jugador.fechaActualizacion = new Date();
+
+    //     //Update en Firebase
+    //     this.puntajeSrv.update(this.jugadorSrv.uid, 'puntajes',this.jugador);
+    //   }
+
+    // }
+    // else{
+    //   console.log('2');
+    //   this.jugador['id'] = this.jugadorSrv.uid ;
+    //   this.jugador.user = this.jugadorSrv.email;
+    //   this.jugador.ahorcado = this.puntosActuales;
+    //   this.jugador.puntosTotales = (this.jugador.puntosTotales + this.puntosActuales);
+    //   this.jugador.fechaActualizacion = new Date();
+
+    //   //Alta en Firebase
+    //   this.puntajeSrv.alta(this.jugador, 'puntajes');
+    // }
+
+  }
 }

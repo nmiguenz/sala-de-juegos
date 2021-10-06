@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -45,11 +46,7 @@ export class JugadorService {
   }
 
   //Obtengo todos los jugadores con puntaje
-  async getById(id:string, nombreColeccion:string) : Promise<any> {
-    try {
-      return await this.firestore.collection('puntaje').doc(id).get()
-    } catch (error) {
-      console.log('Error en getById jugadorService: ',error);      
-    }
+  getById(id:string, nombreColeccion:string) : Observable<any> {
+      return this.firestore.collection(nombreColeccion).doc(id).snapshotChanges();
   }
 }

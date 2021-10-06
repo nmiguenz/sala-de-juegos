@@ -1,9 +1,13 @@
+<app-iniciar-juego *ngIf="!inicio" 
+                    [nombre]="nombreJuego" 
+                    (iniciarJuegoEvent)="iniciarJuego()">
+</app-iniciar-juego>
 
-<div class="container-inicio d-flex justify-content-center align-items-center" *ngIf="!inicio">
+<!-- <div class="container-inicio d-flex justify-content-center align-items-center" *ngIf="!inicio">
     <button class="btn btn-primary" (click)="iniciarJuego()">INICIAR JUEGO</button>
-</div>
+</div> -->
 
-<main class="container-fluid ahorcado_main mt-6">
+<main class="container-fluid ahorcado_main mt-6" >
     <div class="row" id="app">
         <div class="col-12 text-center ahorcado">
             <h1 class="text-success">Ahorcado</h1>
@@ -24,3 +28,9 @@
         </div>
     </div>
 </main>
+
+<app-resultado *ngIf="resultadocomp" 
+                [flagGp]="ganoPerdio" 
+                [flagGano]="gano" 
+                (reiniciarJuegoEvent)="reiniciarJuego()">
+</app-resultado>

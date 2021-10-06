@@ -17,7 +17,8 @@ import { RegisterComponent } from './register/register.component';
     IngresoRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+
   ]
 })
 export class IngresoModule { }

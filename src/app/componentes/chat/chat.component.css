@@ -33,13 +33,13 @@
 
   .chat-window{
     position: fixed !important;
-    z-index: 2002 !important;
+    z-index: 2 !important;
     right: 15px !important;
     bottom: 65px !important;
     width: 300px;
     height: 600px;
-    border: 2px solid #1abc9c;
-    border-radius: 20px;
+    /* border: 2px solid #1abc9c;
+    border-radius: 20px; */
   }
 
   .card-header{
