@@ -171,10 +171,10 @@ export class PreguntadosComponent implements OnInit {
 
   altaResultados(){
 
-    let jugadorSeleccionado;
+    let jugadorSeleccionado ;
 
     this.listaJugadoresPuntaje.forEach((jugador: any) =>{
-      if(jugador.id = this.user.uid){
+      if(jugador.id == this.user.uid){
         jugadorSeleccionado = jugador;
         this.referenciaIdColeccion = jugadorSeleccionado.uid;
         this.puntosHistoricos = jugadorSeleccionado.preguntados;
