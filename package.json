@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.2.0",
+    "@angular/cli": "~12.2.4",
     "@angular/common": "~12.2.0",
     "@angular/compiler": "~12.2.0",
     "@angular/compiler-cli": "~12.2.0",
@@ -32,7 +33,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.4",
-    "@angular/cli": "^6.2.9",
+    "@angular/cli": "~12.2.4",
     "@angular/compiler-cli": "~12.2.0",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
@@ -40,12 +41,24 @@
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
-    "karma-jasmine": "^0.3.8",
+    "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "typescript": "~4.3.5"
   },
   "engines": {
     "node": "v14.17.5",
     "npm": "7.21.1"
-  }
+  },
+  "budgets": [
+    {
+      "type": "initial",
+      "maximumWarning": "4mb",
+      "maximumError": "5mb"
+    },
+    {
+      "type": "anyComponentStyle",
+      "maximumWarning": "7kb",
+      "maximumError": "10kb"
+    }
+  ]
 }
