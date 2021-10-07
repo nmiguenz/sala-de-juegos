@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class PreguntadosServiceService {
 
   url : string = 'http://api.countrylayer.com/v2/all?access_key='
+  url1 : string = 'https://restcountries.com/v2/all';
   url2 : string = 'https://flagcdn.com/es/codes.json';
   urlPalabras : string = 'https://palabras-aleatorias-public-api.herokuapp.com/random'
   token : string = '80ba5d7da42aaba1f6a6ae439fbd6be7';
@@ -14,7 +15,7 @@ export class PreguntadosServiceService {
   constructor(private httpClient : HttpClient) { }
 
   getPaises(){
-    return this.httpClient.get(this.url + this.token);
+    return this.httpClient.get(this.url1);
   }
 
   getPalabras(){

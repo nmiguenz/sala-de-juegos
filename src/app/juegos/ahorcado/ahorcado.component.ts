@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Jugador } from './../../clases/jugador';
 import { User } from './../../clases/user';
 import { AuthService } from 'src/app/servicios/auth.service';
@@ -11,7 +12,6 @@ import { PreguntadosServiceService } from 'src/app/servicios/preguntados-service
   styleUrls: ['./ahorcado.component.css']
 })
 export class AhorcadoComponent implements OnInit {
-
 
   //Constantes
   ALPHABET = "AÁBCDEÉFGHIÍJKLMNÑOÓPQRSTUÚVWXYZ";
@@ -35,10 +35,13 @@ export class AhorcadoComponent implements OnInit {
 
   //Jugador
   user : User | any;
-  jugador: Jugador | any; 
+  jugador: any; 
   puntosActuales : number = 0;
   puntosHistóricos : number = 0;
   puntosTotales : number = 0;
+
+  //Obtener datos documentos
+  listaDocumentos : any[] = [];
   
   constructor(private palabrasSrv : PreguntadosServiceService,
               private jugadorSrv : dbService,
@@ -86,6 +89,7 @@ export class AhorcadoComponent implements OnInit {
 
   iniciarJuego(){
     this.inicio = true;
+    this.obtenerDatosJugadorFb();
     this.obtenerPalabra();
     this.setupLetras();
   }
@@ -192,30 +196,34 @@ export class AhorcadoComponent implements OnInit {
     this.checkGameStatus();
   }
 
+  obtenerDatosJugadorFb(){
+    this.jugadorSrv.getAll('puntajes').then(response =>{
+      response.suscribe((listaPuntajesRef:any) => {
+        console.log(listaPuntajesRef);
+      })
+    })
+  }
+
 
   altaResultados(){
 
-    this.jugador = new Jugador();
+    this.jugador = {
+      id : this.user.uid,
+      user : this.user.email,
+      ahorcado: this.puntosActuales,
+      puntosActuales : this.puntosActuales,
+      puntosTotales : (this.puntosTotales + this.puntosActuales),
+      fechaActualizacion : new Date(), 
+    }
 
-    this.jugador['id'] = this.user.uid;
-    this.jugador['user'] = this.user.email;
-    this.jugador['ahorcado'] = this.puntosActuales;
-    this.jugador['puntosActuales'] = this.puntosActuales;
-    this.jugador['puntosTotales'] = (this.puntosTotales + this.puntosActuales);
-    // this.jugador['mayorMenor'] = 0;
-    // this.jugador['preguntados'] = 0;
-    // this.jugador['hitCarpincho'] = 0;
-    this.jugador['fechaActualizacion'] = new Date();
-
-    console.log(this.jugador);
-    this.jugadorSrv.alta(this.jugador, 'puntajes');
+    // this.jugadorSrv.alta(this.jugador, 'puntajes');
     
-    // if(this.jugador){
-    //   console.log('1');
-    //   this.puntosHistóricos = this.jugador['ahorcado'];
-    //   this.puntosTotales = this.jugador.puntosTotales;
+    if(this.jugador){
+      
+      this.puntosHistóricos = this.jugador['ahorcado'];
+      this.puntosTotales = this.jugador.puntosTotales;
 
-    //   //Si la mayor puntuación en Ahorcado no es la actual...
+      //Si la mayor puntuación en Ahorcado no es la actual...
     //   if(this.puntosHistóricos > this.puntosActuales){
     //     this.jugador.id = this.jugadorSrv.uid;
     //     this.jugador.user = this.jugadorSrv.email;
@@ -250,7 +258,7 @@ export class AhorcadoComponent implements OnInit {
 
     //   //Alta en Firebase
     //   this.puntajeSrv.alta(this.jugador, 'puntajes');
-    // }
+    }
 
   }
 }

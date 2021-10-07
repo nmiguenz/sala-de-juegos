@@ -13,21 +13,24 @@
                 <div class="form-group">
                     <label for="exampleInputApellido">Apellido</label>
                     <input type="text" class="form-control" formControlName="apellido" id="exampleInputApellido">
-                    <small id="apellidoHelp" class="form-text text-muted" *ngIf="formulario.get('apellido')?.hasError('required') && formulario.get('apellido')?.touched">El nombre no puede contener espacios</small>
+                    <small id="apellidoHelp" class="form-text text-muted" *ngIf="formulario.get('apellido')?.hasError('required') && formulario.get('apellido')?.touched">El apellido es requerido</small>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEdad">Edad</label>
                     <input type="number" class="form-control" formControlName="edad" id="exampleInputEdad">
-                    <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('edad')?.hasError('min') || formulario.get('edad')?.hasError('max') && formulario.get('edad')?.touched">La edad minima es de 18 y la máxima de 99</small>
+                    <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('edad')?.hasError('min') || formulario.get('edad')?.hasError('max')">La edad minima es de 18 y la máxima de 99</small>
+                    <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('edad')?.hasError('required') && formulario.get('edad')?.touched">La edad es requerida</small>
                 </div>
-                <!-- <div class="form-group">
+                <div class="form-group">
                     <label for="exampleInputTelefono">Teléfono</label>
-                    <input type="text" class="form-control" formControlName="telefono" id="exampleInputTelefono" placeholder="Ingrese número (Cod. Área + Teléfono -sin 15-)">
-                    <small id="telHelp" class="form-text text-muted" *ngIf="formulario.get('telefono')?.hasError('maxLength')">El teléfono debe tener una extensión de 10 números</small>
-                    <small id="telHelp" class="form-text text-muted" *ngIf="formulario.get('telefono')?.hasError('pattern')">El teléfono debe ser numérico</small>
-                    <small id="telHelp" class="form-text text-muted" *ngIf="formulario.get('telefono')?.touched">El teléfono es requerido</small>
-                </div> -->
+                    <input type="text" class="form-control" formControlName="telefono" id="exampleInputTelefono" placeholder="Ingrese número (Cod. Área + Teléfono sin 15)">
+                    <small id="telHelp" class="form-text text-muted" *ngIf="formulario.get('telefono')?.hasError('noDiezNumeros')&& formulario.get('telefono')?.touched">El teléfono debe tener una extensión de 10 números</small>
+                    <br>
+                    <small id="telHelp" class="form-text text-muted" *ngIf="formulario.get('telefono')?.hasError('required') && formulario.get('telefono')?.touched">El teléfono es requerido</small>
+                </div>
+
                 <div class="row">
+
                     <div class="form-group col-6" >
                         <label for="exampleGenero">Género</label>
                         <select class="form-control" id="exampleGenero" formControlName="genero">
@@ -39,6 +42,7 @@
                         </select>
                         <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('genero')?.hasError('required') && formulario.get('genero')?.touched">El género es requerido</small>
                     </div>
+
                     <div class="form-group col-6">
                         <label for="exampleGenero">¿Te gustó la sala de juegos?</label>
                         <br>
@@ -50,14 +54,17 @@
                             <input class="form-check-input" type="radio" name="gusto" id="inlineRadio2" value="No" formControlName="gusto">
                             <label class="form-check-label" for="inlineRadio2">No</label>
                           </div>
-                        <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('gusto')?.hasError('required') && formulario.get('gusto')?.touched">El género es requerido</small>
+                        <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('gusto')?.hasError('required')">El género es requerido</small>
                     </div>
+
                 </div>
 
                 <div class="form-group">
                     <label for="exampleOpinion">Danos tu opinión</label>
                     <textarea class="form-control" id="exampleOpinion" rows="3" formControlName="opinion"></textarea>
-                    <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('genero')?.hasError('required') && formulario.get('genero')?.touched">Es necesario dejar una opinión para avanzar</small>
+                    <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('opinion')?.hasError('extension') && formulario.get('opinion')?.touched ">El comentario no puede tener menos de 100 y más de 300 caracteres</small>
+                    <br>
+                    <small id="nombreHelp" class="form-text text-muted" *ngIf="formulario.get('opinion')?.hasError('required') && formulario.get('opinion')?.touched">Es necesario dejar una opinión para avanzar</small>
                 </div>
                 <div class="container">
                     <div class="row">

@@ -47,8 +47,8 @@ export class LoginComponent{
               let jugador : any
               //Log de ingreso a la plataforma
               jugador = this.logIngreso(this.user.iduser);
+              console.log(jugador);
               this.jugadorSrv.alta(jugador, 'logsLoginRegister');
-              console.log('me repito');
               jugador = ''; 
             }
             else

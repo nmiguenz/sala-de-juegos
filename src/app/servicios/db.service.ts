@@ -37,7 +37,7 @@ export class dbService {
   }
   
   //Obtengo todos los jugadores con puntaje
-  async getAll(nombreColeccion : string) : Promise<any> {
+  async getAll(nombreColeccion : string) : Promise<any>{
     try {
       return await this.firestore.collection(nombreColeccion).snapshotChanges();
     } catch (error) {
@@ -45,13 +45,17 @@ export class dbService {
     }
   }
 
-  //Obtengo todos los jugadores con puntaje
-  async getById(id:string, nombreColeccion:string) { 
-      try {
-        return await this.firestore.collection(nombreColeccion).doc(id).get();
-      } catch (error) {
-        console.log('Error en getAll jugadorService: ',error);      
-        return error;
-      }
-    }
+  //Suscribe
+  // async getById(id:string, nombreColeccion:string){ 
+  //     try {
+  //       return await this.firestore.collection(nombreColeccion).doc(id).get(); //.get()
+  //     } catch (error : any) {
+  //       console.log('Error en getAll jugadorService: ',error);      
+  //       return error;
+  //     }
+  //   }
+
+  getById(id:string, nombreColeccion:string){
+    return this.firestore.collection(nombreColeccion).doc(id).snapshotChanges();
+  }
 }

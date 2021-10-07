@@ -38,6 +38,7 @@ export class PreguntadosComponent implements OnInit {
   ngOnInit(): void {
     this.preguntadosSrv.getPaises().subscribe( (paises : any)=>{
       this.lista = paises;
+      console.log(this.lista);
     });
   }
 
@@ -55,7 +56,7 @@ export class PreguntadosComponent implements OnInit {
       this.lista.sort(()=> Math.random() - 0.5 );
       this.index = Math.floor(Math.random()*(this.lista.length))
       this.paisSeleccionado = this.lista[this.index];
-      this.alphaCode = this.paisSeleccionado.alpha2Code.toLowerCase();
+      // this.alphaCode = this.paisSeleccionado.alpha2Code.toLowerCase();
       
       this.index1 = Math.floor(Math.random()*(this.lista.length -20))
       this.pais1 = this.lista[this.index1];
@@ -66,16 +67,16 @@ export class PreguntadosComponent implements OnInit {
   
 
    desordenarBotones(){
-    this.arrayBtn.push(this.paisSeleccionado.name);
-    this.arrayBtn.push(this.pais1.name);
-    this.arrayBtn.push(this.pais2.name);
+    this.arrayBtn.push(this.paisSeleccionado.translations.es);
+    this.arrayBtn.push(this.pais1.translations.es);
+    this.arrayBtn.push(this.pais2.translations.es);
 
     this.arrayBtn.sort(()=> Math.random() - 0.5 );
    }
 
    seleccion(btn:string){
 
-    if(btn === this.paisSeleccionado.name){
+    if(btn === this.paisSeleccionado.translations.es){
       this.puntos++
     }
     else{
