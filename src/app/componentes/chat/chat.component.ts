@@ -1,5 +1,4 @@
 import { AuthService } from 'src/app/servicios/auth.service';
-import { Mensaje } from './../../clases/mensaje';
 import { ChatServiceService } from './../../servicios/chat-service.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/clases/user';
@@ -35,8 +34,6 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
 
-   
-
   }
 
 
@@ -48,7 +45,7 @@ export class ChatComponent implements OnInit {
       setTimeout(() => {
         this.scrollToTheLastElementByClass();
         // this.elemento.scrollTop = this.elemento.scrollHeight;
-      }, 50)
+      }, 20)
     });
   }
 

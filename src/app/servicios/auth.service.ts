@@ -9,6 +9,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class AuthService {
   
   codigoError : string = '';
+  estaLogueado = false; //Bandera para usar con el guard.
 
   constructor( 
     private auth:AngularFireAuth, 

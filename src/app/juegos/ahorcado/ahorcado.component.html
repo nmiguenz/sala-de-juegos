@@ -30,7 +30,8 @@
 </main>
 
 <app-resultado *ngIf="resultadocomp" 
-                [flagGp]="ganoPerdio" 
+                [flagGp]="ganoPerdio"
+                [nombre]="nombreJuego"  
                 [flagGano]="gano"
                 [jugadorResult]="jugador" 
                 (reiniciarJuegoEvent)="reiniciarJuego()">

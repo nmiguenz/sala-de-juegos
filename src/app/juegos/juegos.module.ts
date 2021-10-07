@@ -7,6 +7,7 @@ import { MayorMenorComponent } from './mayor-menor/mayor-menor.component';
 import { GolpearCarpinchoComponent } from './golpear-carpincho/golpear-carpincho.component';
 import { PreguntadosComponent } from './preguntados/preguntados.component';
 import { IniciarJuegoComponent } from './iniciar-juego/iniciar-juego.component';
+import { ListadoPuntajesComponent } from './listado-puntajes/listado-puntajes.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { IniciarJuegoComponent } from './iniciar-juego/iniciar-juego.component';
     GolpearCarpinchoComponent,
     PreguntadosComponent,
     ResultadoComponent,
-    IniciarJuegoComponent
+    IniciarJuegoComponent,
+    ListadoPuntajesComponent
   ],
   imports: [
     CommonModule,

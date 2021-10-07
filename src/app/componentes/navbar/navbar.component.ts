@@ -31,6 +31,7 @@ export class NavbarComponent implements OnInit {
   onLogout(){
     this.authService.logOut().then( () => {
       console.log('Se cerró la sesión.');
+      this.authService.estaLogueado = false //bandera para el Guard
       this.isLogged = false;
       //this.route.navigate[('')]
     }).catch(() => console.log('Error en el logout.'));

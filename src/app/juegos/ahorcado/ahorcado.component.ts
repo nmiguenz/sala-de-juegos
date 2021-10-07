@@ -35,10 +35,16 @@ export class AhorcadoComponent implements OnInit {
 
   //Jugador
   user : User | any;
-  jugador: any; 
+  jugador: any;
+  listaJugadoresPuntaje : any[] = []; 
   puntosActuales : number = 0;
-  puntosHistóricos : number = 0;
+  puntosHistoricos : number = 0;
   puntosTotales : number = 0;
+  puntosMayorMenor : number = 0;
+  puntosPreguntados : number = 0;
+  puntosHitC : number = 0;
+  referenciaIdColeccion : string = '';
+
 
   //Obtener datos documentos
   listaDocumentos : any[] = [];
@@ -49,6 +55,7 @@ export class AhorcadoComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerJugador();
+    this.obtenerJugadoresPuntaje();
   }
 
   //Lo comento por la inclusión del servicio
@@ -89,7 +96,6 @@ export class AhorcadoComponent implements OnInit {
 
   iniciarJuego(){
     this.inicio = true;
-    this.obtenerDatosJugadorFb();
     this.obtenerPalabra();
     this.setupLetras();
   }
@@ -196,69 +202,103 @@ export class AhorcadoComponent implements OnInit {
     this.checkGameStatus();
   }
 
-  obtenerDatosJugadorFb(){
+  //Obtiene todos los puntajes de los jugadores
+  obtenerJugadoresPuntaje(){
     this.jugadorSrv.getAll('puntajes').then(response =>{
-      response.suscribe((listaPuntajesRef:any) => {
-        console.log(listaPuntajesRef);
+      response.subscribe((listaPuntajesJugadoresRef : any) =>{
+
+        // listaPuntajesJugadoresRef.forEach((listaPuntajes : any) => {
+        //   this.listaJugadoresPuntaje.push(listaPuntajes.payload.doc.data());
+        //   console.log(this.listaJugadoresPuntaje);
+        // });
+          
+          //Podría hacer así tambien
+          this.listaJugadoresPuntaje = listaPuntajesJugadoresRef.map((usuarioRef:any)=>{
+            let jugador = usuarioRef.payload.doc.data();
+            jugador['uid'] = usuarioRef.payload.doc.id; // le agrego el campo uid al objeto Jugador
+            return jugador;
+          });
       })
-    })
+    });
   }
 
 
   altaResultados(){
 
-    this.jugador = {
-      id : this.user.uid,
-      user : this.user.email,
-      ahorcado: this.puntosActuales,
-      puntosActuales : this.puntosActuales,
-      puntosTotales : (this.puntosTotales + this.puntosActuales),
-      fechaActualizacion : new Date(), 
-    }
+    let jugadorSeleccionado;
 
-    // this.jugadorSrv.alta(this.jugador, 'puntajes');
+    this.listaJugadoresPuntaje.forEach((jugador: any) =>{
+      if(jugador.id = this.user.uid){
+        jugadorSeleccionado = jugador;
+        this.referenciaIdColeccion = jugadorSeleccionado.uid;
+        this.puntosHistoricos = jugadorSeleccionado.ahorcado;
+        this.puntosMayorMenor = jugadorSeleccionado.mayorMenor;
+        this.puntosPreguntados = jugadorSeleccionado.preguntados;
+        this.puntosHitC = jugadorSeleccionado.hitCarpincho;
+        this.puntosTotales = jugadorSeleccionado.puntosTotales;
+      }
+    });
+
+    console.log(this.puntosHistoricos)
+    // // this.jugadorSrv.alta(this.jugador, 'puntajes');
     
-    if(this.jugador){
+    if(jugadorSeleccionado){
       
-      this.puntosHistóricos = this.jugador['ahorcado'];
-      this.puntosTotales = this.jugador.puntosTotales;
-
       //Si la mayor puntuación en Ahorcado no es la actual...
-    //   if(this.puntosHistóricos > this.puntosActuales){
-    //     this.jugador.id = this.jugadorSrv.uid;
-    //     this.jugador.user = this.jugadorSrv.email;
-    //     this.jugador.ahorcado = this.puntosHistóricos;
-    //     this.jugador.puntosTotales = (this.jugador.puntosTotales + this.puntosActuales);
-    //     this.jugador.fechaActualizacion = new Date();
+      if(this.puntosHistoricos > this.puntosActuales){
+        
+        this.jugador = {
+          id : this.user.uid,
+          user : this.user.email,
+          ahorcado: this.puntosHistoricos,
+          mayorMenor : this.puntosMayorMenor,
+          preguntados : this.puntosPreguntados,
+          hitCarpincho : this.puntosHitC,
+          puntosActuales : this.puntosActuales,
+          puntosTotales : (this.puntosTotales + this.puntosActuales),
+          fechaActualizacion : new Date(), 
+        }
 
-    //     //Update en Firebase
-    //     this.puntajeSrv.update(this.jugadorSrv.uid, 'puntajes',this.jugador);
+        //Update en Firebase
+        this.jugadorSrv.update(this.referenciaIdColeccion, 'puntajes', this.jugador);
 
-    //   }
-    //   //Si la mayor puntuación en Ahorcado es la actual...
-    //   else{
-    //     this.jugador.id = this.jugadorSrv.uid;
-    //     this.jugador.user = this.jugadorSrv.email;
-    //     this.jugador.ahorcado = this.puntosActuales;
-    //     this.jugador.puntosTotales = (this.jugador.puntosTotales + this.puntosActuales);
-    //     this.jugador.fechaActualizacion = new Date();
+      }
+      //Si la mayor puntuación en Ahorcado es la actual...
+      else{
+        this.jugador = {
+          id : this.user.uid,
+          user : this.user.email,
+          ahorcado: this.puntosActuales,
+          mayorMenor : this.puntosMayorMenor,
+          preguntados : this.puntosPreguntados,
+          hitCarpincho : this.puntosHitC,
+          puntosActuales : this.puntosActuales,
+          puntosTotales : (this.puntosTotales + this.puntosActuales),
+          fechaActualizacion : new Date(), 
+        }
 
-    //     //Update en Firebase
-    //     this.puntajeSrv.update(this.jugadorSrv.uid, 'puntajes',this.jugador);
-    //   }
+        //Update en Firebase
+        this.jugadorSrv.update(this.referenciaIdColeccion, 'puntajes', this.jugador);
+      }
 
-    // }
-    // else{
-    //   console.log('2');
-    //   this.jugador['id'] = this.jugadorSrv.uid ;
-    //   this.jugador.user = this.jugadorSrv.email;
-    //   this.jugador.ahorcado = this.puntosActuales;
-    //   this.jugador.puntosTotales = (this.jugador.puntosTotales + this.puntosActuales);
-    //   this.jugador.fechaActualizacion = new Date();
-
-    //   //Alta en Firebase
-    //   this.puntajeSrv.alta(this.jugador, 'puntajes');
     }
+    else{
+      
+      this.jugador = {
+        id : this.user.uid,
+        user : this.user.email,
+        ahorcado: this.puntosActuales,
+        mayorMenor : 0,
+        preguntados : 0,
+        hitCarpincho : 0,
+        puntosActuales : this.puntosActuales,
+        puntosTotales : this.puntosActuales,
+        fechaActualizacion : new Date(), 
+      }
 
+      //Update en Firebase
+      this.jugadorSrv.alta(this.jugador, 'puntajes');
+
+    }
   }
 }

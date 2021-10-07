@@ -38,6 +38,7 @@ export class LoginComponent{
     try {
       const result = await this.auth.login(this.user);
       if(result){
+        this.auth.estaLogueado = true; //Bandera para el guard.
         //Obtengo el ID de inicio de sesión
         this.auth.isLoggedIn().subscribe(arg => {
             if(arg && primeraVez){

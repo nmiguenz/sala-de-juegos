@@ -16,8 +16,8 @@
             <div class="app-mensajes mb-1" id="divMensajes">
                 <div *ngFor="let chat of chatSrv.chats" class="mensajeDiv"
                 [ngClass]="{'text-right': usuarioLogueado.iduser == chat.uid}">
-                <span class="badge badge-primary" [ngClass]="{'badge-primary': usuarioLogueado.iduser == chat.uid,
-                'badge-success':  usuarioLogueado.iduser != chat.uid}">
+                <span class="badge badge-success" [ngClass]="{'badge-success': usuarioLogueado.iduser == chat.uid,
+                'badge-primary':  usuarioLogueado.iduser != chat.uid}">
                 
                 {{chat.nombre}}
             </span>
@@ -41,28 +41,3 @@
             </div>
         </div>
   </div>
-    <!-- <div class="chat-window" *ngIf="openChat">
-        <h2>Chat</h2>
-        <hr>
-
-        <div class="app-mensajes mb-1" id="divMensajes">
-            <div *ngFor="let chat of chatSrv.chats"
-                [ngClass]="{'text-right': usuarioLogueado.iduser == chat.uid}">
-                <span class="badge badge-primary"
-                        [ngClass]="{'badge-primary': usuarioLogueado.iduser == chat.uid,
-                                    'badge-success':  usuarioLogueado.iduser != chat.uid}">
-
-                                    {{chat.nombre}}
-                </span>
-                <p>{{chat.mensaje}}</p>
-            </div>
-            
-        </div>
-        
-        <input type="text" name="mensaje" 
-                class="form-control input-chat"
-                [(ngModel)]="mensaje"
-                (keyup.enter)="enviarMensaje()"
-                placeholder="Enviar mensaje">
-            
-    </div> -->

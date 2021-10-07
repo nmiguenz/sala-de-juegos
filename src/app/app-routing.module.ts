@@ -1,3 +1,4 @@
+import { AuthGuard } from './servicios/auth.guard';
 import { EncuestaComponent } from './componentes/encuesta/encuesta.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -15,11 +16,13 @@ const routes: Routes = [
   },
   {
     path: 'juegos',
-    loadChildren: () => import('./juegos/juegos.module').then(m => m.JuegosModule)
+    loadChildren: () => import('./juegos/juegos.module').then(m => m.JuegosModule),
+    // canActivate : [AuthGuard]
   },
   { 
     path: 'encuesta', 
-    component: EncuestaComponent
+    component: EncuestaComponent,
+    // canActivate : [AuthGuard]
   },
   { 
     path: 'quien-soy', 

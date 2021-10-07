@@ -36,7 +36,8 @@
       </div>
 </div>
 
-<app-resultado *ngIf="resultadocomp" 
+<app-resultado *ngIf="resultadocomp"
+                [nombre]="nombreJuego" 
                 [flagGp]="ganoPerdio" 
                 [flagGano]="gano"
                 [jugadorResult]="jugador" 

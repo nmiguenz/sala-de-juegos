@@ -15,7 +15,7 @@ export class GolpearCarpinchoComponent implements OnInit {
 
   nombreJuego = 'Hit Carpincho';
   lista = ["","","","","","","","carpincho","","","","","","","","","","","",""]
-  tiempoRestante: number = 5;
+  tiempoRestante: number = 60;
   tiempo:number = 1000;
 
   //Observable
@@ -31,9 +31,14 @@ export class GolpearCarpinchoComponent implements OnInit {
   //Jugador
   user : User | any;
   jugador: Jugador | any; 
+  listaJugadoresPuntaje : any[] = []; 
   puntosActuales : number = 0;
-  puntosHistóricos : number = 0;
+  puntosHistoricos : number = 0;
   puntosTotales : number = 0;
+  puntosMayorMenor : number = 0;
+  puntosPreguntados : number = 0;
+  puntosAhorcado : number = 0;
+  referenciaIdColeccion : string = '';
 
   constructor(private jugadorSrv : dbService,
               private authSrv : AuthService) {
@@ -41,6 +46,7 @@ export class GolpearCarpinchoComponent implements OnInit {
   
   ngOnInit(): void {
     this.obtenerJugador();
+    this.obtenerJugadoresPuntaje();
   }
 
   randomSquare(){
@@ -75,8 +81,8 @@ export class GolpearCarpinchoComponent implements OnInit {
     this.resultadocomp = false;
     this.ganoPerdio = false; 
     this.gano = false;
-    this.tiempoRestante = 60; 
-    
+    this.tiempoRestante = 60;
+    this.puntosActuales = 0; 
     this.iniciarJuego();
   }
 
@@ -84,7 +90,7 @@ export class GolpearCarpinchoComponent implements OnInit {
     this.resultadocomp = true;
     this.ganoPerdio = true;
     //Si hizo menos puntos que la última vez, PERDIÓ
-    
+    this.altaResultados();
   }
   
   golpeCarpincho(hit: any){
@@ -108,6 +114,7 @@ export class GolpearCarpinchoComponent implements OnInit {
     } 
   }
 
+  //Obtengo el uid del jugador logueado
   obtenerJugador(){
     this.authSrv.isLoggedIn().subscribe(data =>{
       this.user = data;
@@ -115,65 +122,107 @@ export class GolpearCarpinchoComponent implements OnInit {
     })
   }
 
+  //Obtiene todos los puntajes de los jugadores
+  obtenerJugadoresPuntaje(){
+    this.jugadorSrv.getAll('puntajes').then(response =>{
+      response.subscribe((listaPuntajesJugadoresRef : any) =>{
+
+        // listaPuntajesJugadoresRef.forEach((listaPuntajes : any) => {
+        //   this.listaJugadoresPuntaje.push(listaPuntajes.payload.doc.data());
+        //   console.log(this.listaJugadoresPuntaje);
+        // });
+          
+          //Podría hacer así tambien
+          this.listaJugadoresPuntaje = listaPuntajesJugadoresRef.map((usuarioRef:any)=>{
+            let jugador = usuarioRef.payload.doc.data();
+            jugador['uid'] = usuarioRef.payload.doc.id; // le agrego el campo uid al objeto Jugador
+            return jugador;
+          });
+      })
+    });
+  }
+
+
   altaResultados(){
 
-    this.jugador = new Jugador();
+    let jugadorSeleccionado;
 
-    this.jugador['id'] = this.user.uid;
-    this.jugador['user'] = this.user.email;
-    this.jugador['hitCarpincho'] = this.puntosActuales;
-    this.jugador['puntosActuales'] = this.puntosActuales;
-    this.jugador['puntosTotales'] = (this.puntosTotales + this.puntosActuales);
-    // this.jugador['mayorMenor'] = 0;
-    // this.jugador['preguntados'] = 0;
-    // this.jugador['hitCarpincho'] = 0;
-    this.jugador['fechaActualizacion'] = new Date();
+    this.listaJugadoresPuntaje.forEach((jugador: any) =>{
+      if(jugador.id = this.user.uid){
+        jugadorSeleccionado = jugador;
+        this.referenciaIdColeccion = jugadorSeleccionado.uid;
+        this.puntosHistoricos = jugadorSeleccionado.hitCarpincho;
+        this.puntosMayorMenor = jugadorSeleccionado.mayorMenor;
+        this.puntosPreguntados = jugadorSeleccionado.preguntados;
+        this.puntosAhorcado = jugadorSeleccionado.ahorcado;
+        this.puntosTotales = jugadorSeleccionado.puntosTotales;
+      }
+    });
 
-    console.log(this.jugador);
-    // this.puntajeSrv.alta(this.jugador, 'puntajes');
+    console.log(this.puntosHistoricos)
+    // // this.jugadorSrv.alta(this.jugador, 'puntajes');
     
-    // if(this.jugador){
-    //   console.log('1');
-    //   this.puntosHistóricos = this.jugador['ahorcado'];
-    //   this.puntosTotales = this.jugador.puntosTotales;
+    if(jugadorSeleccionado){
+      
+      //Si la mayor puntuación en Ahorcado no es la actual...
+      if(this.puntosHistoricos > this.puntosActuales){
+        this.gano = false;
+        
+        this.jugador = {
+          id : this.user.uid,
+          user : this.user.email,
+          ahorcado: this.puntosAhorcado,
+          mayorMenor : this.puntosMayorMenor,
+          preguntados : this.puntosPreguntados,
+          hitCarpincho : this.puntosHistoricos,
+          puntosActuales : this.puntosActuales,
+          puntosTotales : (this.puntosTotales + this.puntosActuales),
+          fechaActualizacion : new Date(), 
+        }
 
-    //   //Si la mayor puntuación en Ahorcado no es la actual...
-    //   if(this.puntosHistóricos > this.puntosActuales){
-    //     this.jugador.id = this.user.uid;
-    //     this.jugador.user = this.user.email;
-    //     this.jugador.ahorcado = this.puntosHistóricos;
-    //     this.jugador.puntosTotales = (this.jugador.puntosTotales + this.puntosActuales);
-    //     this.jugador.fechaActualizacion = new Date();
+        //Update en Firebase
+        this.jugadorSrv.update(this.referenciaIdColeccion, 'puntajes', this.jugador);
 
-    //     //Update en Firebase
-    //     this.puntajeSrv.update(this.user.uid, 'puntajes',this.jugador);
+      }
+      //Si los actuales son mayores a los historicos, ganó
+      else{
+        this.gano = true;
 
-    //   }
-    //   //Si la mayor puntuación en Ahorcado es la actual...
-    //   else{
-    //     this.jugador.id = this.user.uid;
-    //     this.jugador.user = this.user.email;
-    //     this.jugador.ahorcado = this.puntosActuales;
-    //     this.jugador.puntosTotales = (this.jugador.puntosTotales + this.puntosActuales);
-    //     this.jugador.fechaActualizacion = new Date();
+        this.jugador = {
+          id : this.user.uid,
+          user : this.user.email,
+          ahorcado: this.puntosAhorcado,
+          mayorMenor : this.puntosMayorMenor,
+          preguntados : this.puntosPreguntados,
+          hitCarpincho : this.puntosActuales,
+          puntosActuales : this.puntosActuales,
+          puntosTotales : (this.puntosTotales + this.puntosActuales),
+          fechaActualizacion : new Date(), 
+        }
 
-    //     //Update en Firebase
-    //     this.puntajeSrv.update(this.user.uid, 'puntajes',this.jugador);
-    //   }
+        //Update en Firebase
+        this.jugadorSrv.update(this.referenciaIdColeccion, 'puntajes', this.jugador);
+      }
 
-    // }
-    // else{
-    //   console.log('2');
-    //   this.jugador['id'] = this.user.uid ;
-    //   this.jugador.user = this.user.email;
-    //   this.jugador.ahorcado = this.puntosActuales;
-    //   this.jugador.puntosTotales = (this.jugador.puntosTotales + this.puntosActuales);
-    //   this.jugador.fechaActualizacion = new Date();
+    }
+    else{
+      
+      this.jugador = {
+        id : this.user.uid,
+        user : this.user.email,
+        ahorcado: 0,
+        mayorMenor : 0,
+        preguntados : 0,
+        hitCarpincho : this.puntosActuales,
+        puntosActuales : this.puntosActuales,
+        puntosTotales : this.puntosActuales,
+        fechaActualizacion : new Date(), 
+      }
 
-    //   //Alta en Firebase
-    //   this.puntajeSrv.alta(this.jugador, 'puntajes');
-    // }
+      //Update en Firebase
+      this.jugadorSrv.alta(this.jugador, 'puntajes');
 
+    }
   }
 
 }

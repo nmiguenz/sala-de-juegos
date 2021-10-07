@@ -85,3 +85,14 @@
     animation-name: fadeIn;
   }
   
+  .badge-primary{
+    background-color: #6c757d !important;
+  }
+
+  .badge-success{
+    background-color: #0C9 !important;
+  }
+
+  .text-right{
+    text-align: end !important;
+  }

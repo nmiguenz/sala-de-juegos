@@ -4,6 +4,7 @@ import { PreguntadosComponent } from './preguntados/preguntados.component';
 import { GolpearCarpinchoComponent } from './golpear-carpincho/golpear-carpincho.component';
 import { MayorMenorComponent } from './mayor-menor/mayor-menor.component';
 import { AhorcadoComponent } from './ahorcado/ahorcado.component';
+import { ListadoPuntajesComponent } from './listado-puntajes/listado-puntajes.component';
 
 const routes: Routes = [
   { 
@@ -18,6 +19,9 @@ const routes: Routes = [
   {
     path: 'golpear-carpincho',
     component:GolpearCarpinchoComponent},
+  {
+    path: 'listado-puntajes',
+    component:ListadoPuntajesComponent},
   ];
 
 @NgModule({
