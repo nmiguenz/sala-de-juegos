@@ -1,13 +1,30 @@
+import { Jugador } from 'src/app/clases/jugador';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class dbService {
 
-  constructor( private firestore:AngularFirestore) { }
+  private itemsCollection: AngularFirestoreCollection<any>;
+  public player : Jugador[] = [];
+
+  constructor( private firestore:AngularFirestore) {
+    this.itemsCollection = this.firestore.collection<Jugador>('chats');
+  }
+
+  getAllByOrder(nombreColeccion : string, campo : string, ordenamiento :any){
+    this.itemsCollection = this.firestore.collection<Jugador>(nombreColeccion, (ref) =>
+      ref.orderBy(campo,ordenamiento)
+    );
+
+    return this.itemsCollection.valueChanges().pipe(map(jugadorPoint => {
+      this.player = jugadorPoint;
+    }));
+  }
 
   //Alta
   //Modificar campos jugador por la clase
