@@ -29,27 +29,28 @@ export class ListadoPuntajesComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.carros);
-    this.ordenar();
+    // console.log(this.carros);
     this.obtenerPuntajesjugador();
+    this.ordenar();
   }
 
   obtenerPuntajesjugador(){
     this.db.getAll('puntajes').then(response  =>{
       response.subscribe((listadoRef : any) =>{
         listadoRef.forEach((element: any) => {
-          // this.listadoPuntajes.push( )
-          console.log(element.payload.doc.data().id);
+          this.listadoPuntajes.push(element.payload.doc.data());
+          // console.log(element.payload.doc.data().id);
         });
-        console.log(this.listadoPuntajes);
+        // console.log(this.listadoPuntajes);
+        this.ordenar();
       });
     });
 
   }
 
   ordenar(){
-    this.carros.sort(((a, b) => a.modelo - b.modelo));
-    console.log('sort ',this.carros)
+    this.listadoPuntajes.sort(((a, b) => b.puntosTotales - a.puntosTotales));
+    // console.log('sort ',this.carros)
   }
 
 }

@@ -29,15 +29,15 @@
             <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#juegos" routerLinkActive="active">Juegos</a>
           </li>
           <li class="nav-item" *ngIf="isLogged">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded" role="button" (click)="onLogout()">Logout</a>
-          </li>
-          <li class="nav-item" *ngIf="isLogged">
             <a class="nav-link py-3 px-0 px-lg-3 rounded" role="button" [routerLink]="['/encuesta']" routerLinkActive="active">Encuesta</a>
           </li>
           <li class="nav-item" *ngIf="isLogged">
             <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                [routerLink]="['/juegos/listado-puntajes']"
-                routerLinkActive="active">{{user?.email}}</a>
+            [routerLink]="['/juegos/listado-puntajes']"
+            routerLinkActive="active">{{user?.email}}</a>
+          </li>
+          <li class="nav-item" *ngIf="isLogged">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded" role="button" (click)="onLogout()"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i></a>
           </li>
         </ul>
       </div>
